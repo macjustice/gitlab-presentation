@@ -1,3 +1,5 @@
+Google Slides presentation link: https://docs.google.com/presentation/d/1WDIgsLAbTQhWiye9BcJTfadE88Xpi4kddXimAk253jM/edit#slide=id.p
+
 ## Description
 Mac Justice from Synapse Product Development, Inc. will show how Synapse uses GitLab with Mac management tools to track changes to scripts and configurations and automate testing and roll-out.
 
