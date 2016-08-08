@@ -1,0 +1,7 @@
+# This will push changes to the munki-repo to the digital ocean droplet
+
+deploy:
+  image: alpine
+  stage: deploy
+  script:
+    - echo "hello!"

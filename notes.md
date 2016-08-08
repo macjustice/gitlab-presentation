@@ -1,7 +1,7 @@
 Google Slides presentation link: https://docs.google.com/presentation/d/1WDIgsLAbTQhWiye9BcJTfadE88Xpi4kddXimAk253jM/edit#slide=id.p
 
 ## Description
-Mac Justice from Synapse Product Development, Inc. will show how Synapse uses GitLab with Mac management tools to track changes to scripts and configurations and automate testing and roll-out.
+Mac Justice from Synapse Product Development, Inc. will show how Synapse uses GitLab to create a unified workflow to atomate testing and deployment of Mac management tools like Munki and Imagr.
 
 ## Presentation Outline
 1. Who am I? What is Synapse?
@@ -13,7 +13,7 @@ Mac Justice from Synapse Product Development, Inc. will show how Synapse uses Gi
 	- Why do you care?
 	- Your organization's own private GitHub
 	- Free and Open Source "Community Ediiton" (CE), or paid premium "Enterprise Edition" (EE)
-	- Includes tools for bug tracking, code review, documentation, 
+	- Includes tools for bug tracking, code review, documentation,
 5. What is Gitlab CI?
 	- Continuous Integration - whenever you make a change, tests, deployment, or other actions can happen automatically
 	- test/build/deploy scripts included with the repo
@@ -39,5 +39,10 @@ Mac Justice from Synapse Product Development, Inc. will show how Synapse uses Gi
 		- Demo munki repo
 			- hosted in GitLab (public GitLab?)
 			- .gitlab-ci.yml for deployment
-		- Web server, possibly Digital Ocean
+		- Web server, S3
 		- Mac Client, MSC configured with demo server, hostname for manifest
+			- Mac OS
+			- Demo User
+			- Munkitools
+			- middleware-s3.py
+			- defaults for munki/middleware
