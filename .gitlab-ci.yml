@@ -1,7 +1,9 @@
-# This will push changes to the munki-repo to the digital ocean droplet
+# This will push changes to the munki-repo to s3 bucket
 
 deploy:
-  image: alpine
+  image: macjustice/git-lfs-s3cmd
   stage: deploy
   script:
-    - echo "hello!"
+    - ./s3-deploy.sh
+  variables:
+    BUCKET_PATH: "s3://gitlab-munki-demo"
