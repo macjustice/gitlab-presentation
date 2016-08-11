@@ -1,7 +1,9 @@
 Google Slides presentation link: https://docs.google.com/presentation/d/1WDIgsLAbTQhWiye9BcJTfadE88Xpi4kddXimAk253jM/edit#slide=id.p
 
+GitLab [blog post](https://about.gitlab.com/2016/08/05/continuous-integration-delivery-and-deployment-with-gitlab/) on CI,CD
+
 ## Description
-Mac Justice from Synapse Product Development, Inc. will show how Synapse uses GitLab to create a unified workflow to atomate testing and deployment of Mac management tools like Munki and Imagr.
+Mac Justice from Synapse Product Development, Inc. will show how Synapse uses GitLab to create a unified workflow to automate development, testing and deployment of Mac management tools like Munki and Imagr.
 
 ## Presentation Outline
 1. Who am I? What is Synapse?
@@ -16,10 +18,13 @@ Mac Justice from Synapse Product Development, Inc. will show how Synapse uses Gi
 	- Includes tools for bug tracking, code review, documentation,
 5. What is Gitlab CI?
 	- Continuous Integration - whenever you make a change, tests, deployment, or other actions can happen automatically
+  - Continuous Delivery/Deployment
 	- test/build/deploy scripts included with the repo
-		- Testing & building procedures also version controlled
+			- Testing and building procedures also version controlled
 		- Your whole process lives in one place, better context
-	- gitlab-ci-multi-runner - agent that runs the CI jobs, runs on Linux, MacOS, Windows, Docker
+	- Runners
+			- gitlab-ci-multi-runner - agent that runs the CI jobs, runs on Linux, MacOS, Windows, Docker
+			- shared vs specific
 	- Variables - keeps sensitive data out of version control, but still available to CI
 4. How does Synapse use it?
 	- What problems are we trying to solve?
@@ -39,10 +44,15 @@ Mac Justice from Synapse Product Development, Inc. will show how Synapse uses Gi
 		- Demo munki repo
 			- hosted in GitLab (public GitLab?)
 			- .gitlab-ci.yml for deployment
-		- Web server, S3
+		- s3 bucket
+			- IAM r/w user @done
+			- IAM r user @done
+			- bucket @done
+			- bucket permissions @done
 		- Mac Client, MSC configured with demo server, hostname for manifest
 			- Mac OS
 			- Demo User
 			- Munkitools
 			- middleware-s3.py
-			- defaults for munki/middleware
+			- Middleware settings
+			- ManagedInstalls.plist
