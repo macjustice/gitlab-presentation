@@ -1,12 +1,11 @@
 build-lists: true
 autoscale: true
 
-# [fit] GitLab:
-## [Better subtitle here]
+# GitLab
 
 ---
 
-# Introductions
+# [fit] Introductions
 
 ---
 
@@ -26,15 +25,15 @@ autoscale: true
 ---
 ![fit](http://www.cambridgeconsultants.com/sites/default/files/synapse_logo_and_products.jpg)
 
-^ We're a engineering consulting company specializing in product development. We primarily specialize in mechanical, electrical, and firmware engineering. Clients come to us with an idea and we help make it a manufacturable product.
+^ We're a engineering consulting company specializing in product development. We primarily specialize in mechanical, electrical, and firmware engineering. Clients come to us with products they would like to bring to market, and we help turn ideas into a manufacturable product.
 
 ---
-# Tool Overview
+## The Tools
 
 ---
 # Git
 
-![left 50%](https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Git_icon.svg/1024px-Git_icon.svg.png)
+![right fit](https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Git_icon.svg/1024px-Git_icon.svg.png)
 
 - Source Code Management
 - Tracks changes to text files
@@ -50,8 +49,8 @@ Dig in deeper with [Pro Git](https://git-scm.com/book/en/v2).
 # Git LFS
 ## Large File Storage
 
-- Git + Big Files = :cold_sweat:
-- Git + Git LFS + Big Files = :heart_eyes:
+Git + Big Files = :cold_sweat:
+Git + Git LFS + Big Files = :heart_eyes:
 
 ^ Because Git is designed for text files, it chokes on big binary files, such as packages or disk images. Tools like Git Annex and Git Fat have been developed to address this, but they're unwieldy and not widely supported. GitHub created Git LFS to make it easy, and it's supported by the major Git server products, like GitHub, GitLab, and BitBucket.
 
@@ -71,16 +70,14 @@ git push origin master
 ^ A quick example. Install git-lfs, open an existing git repo, use `git lfs install` to initialize lfs in that repo, then specify the file types you would like to track. From here, you can use standard git commands to stage files, commit your changes, then push them to a remote server.
 
 ---
-![left 75%](https://gitlab.com/gitlab-com/gitlab-artwork/raw/master/wordmark/stacked_wm_no_bg.png)
-
-# GitLab
+![left](https://gitlab.com/gitlab-com/gitlab-artwork/raw/master/wordmark/stacked_wm_no_bg.png)
 
 - Open Source
 - Self-hosted or gitlab.com
 - Freemium: Free and paid editions
 
 
-^ GitLab is an open source competitor to GitHub. It's very easy to set up, just a package install on most Linux distros, even on a Raspberry Pi. From there, you can integrate with LDAP, SAML, or another identity provider for authentication, or just use the built-in user management. It has lots of cool features, like the already-mentioned Git LFS support, an issue tracker, wiki hosting, a container registry, and more, but I'm gong to focus on my favorite feature...
+^ GitLab is an open source competitor to GitHub. It's very easy to set up, just a package install on most Linux distros. From there, you can integrate with LDAP, SAML, or another identity provider for authentication, or just use the built-in user management. It has lots of cool features, like the already-mentioned Git LFS support, an issue tracker, wiki hosting, a container registry, and more, but I'm gong to focus on my favorite feature...
 
 ---
 # Gitlab CI
@@ -88,18 +85,21 @@ git push origin master
 ---
 # What is CI?
 
-- Continuous Integration
-- Push code to server :arrow_forward: Things happen
+## Continuous Integration
+- Push code :arrow_forward: Test and Build
+
+# Continuous Deployment
+- Push code :arrow_forward: Test, Build, Deploy
 
 ^ CI stands for Continuous Integration. In the software development world, this usually means your code is automatically tested every time you push it, to reduce the likelihood of bugs cropping up. However, the tools that enable this can also be used to automate all kinds of things. Check out Tim Sutton's talk on Jenkins, another CI tool, from MacDevOps:YVR 2016, which was a huge influence on this talk.
 
 ---
 # CI Runners
 
-![inline 40%](http://assets.materialup.com/uploads/ec819071-7140-4c6d-89ac-81b712642fcb/512x512bb-85.png)![inline 8%](https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Windows_logo_-_2012.svg/2000px-Windows_logo_-_2012.svg.png)
+![inline 40%](https://ssl.apple.com/osx/images/og.jpg?201606301611)![inline 40%](http://betanews.com/wp-content/uploads/2015/06/win10-logo.jpg)
 ![inline 60%](https://upload.wikimedia.org/wikipedia/commons/a/af/Tux.png)![inline 60%](https://alexisduque.github.io/docker-presentation/images/logo-docker.png)
 
-^ CI copies your code to a runner, which can run on Linux, Mac, or Windows, virtual or physical. There it executes a job, which is the CI term for a task. Jobs can be run in sequence or parallel, and can be essentially anything you can script. CI even supports Docker, so you even create ephemeral containers that execute the job, return the result, and are discarded.
+^ CI copies your code to a runner, which can run on Linux, Mac, or Windows, virtual or physical. There it executes a job, which is the CI term for a task. Jobs can be run in sequence or parallel, and can be essentially anything you can script. CI even supports Docker, so you even create temporary containers that execute the job, return the result, and are discarded.
 
 ---
 # .gitlab-ci.yml
@@ -135,14 +135,29 @@ job2:
   - Changes rsynced to site imaging servers
 - AutoPkg (Planned)
 - AutoDMG (Planned)
-- Ansible (Planned)
 
 ---
-# [fit] Demo
+# [fit]Demo
 
----
-# [fit] Q & A
+^ Launch Mac Client VM. Prestaged with Managed Software Center, [s3-auth](https://github.com/waderobson/s3-auth) middleware script and settings, S3 bucket with R/W IAM user for CI and Read-Only user for Munki.
+
+^ Open munki-repo in Munki Admin. Add package to site_default manifest as an optional install. Save.
+
+^ `cd gitlab_preseentation`
+`git add .`
+`git commit -m "added pkg"`
+`git push`
+
+^ open https://gitlab.synapse.com/macj/gitlab_presentation
+hit "pipelines" section
+Open the log for the CI build
+
+^ Once complete, check for updates in the Managed Software Center in client VM.
+GREAT SUCCESS
 
 ---
 # Thanks!
-### *macjustice* on Twitter, Slack, GitHub, etc.
+### Twitter: @macjustice
+### MacAdmins Slack: macjustice
+### GitHub: macjustice
+### basically wherever: macjustice
