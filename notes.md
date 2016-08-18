@@ -1,5 +1,3 @@
-Google Slides presentation link: https://docs.google.com/presentation/d/1WDIgsLAbTQhWiye9BcJTfadE88Xpi4kddXimAk253jM/edit#slide=id.p
-
 GitLab [blog post](https://about.gitlab.com/2016/08/05/continuous-integration-delivery-and-deployment-with-gitlab/) on CI,CD
 
 ## Description
@@ -50,9 +48,9 @@ Mac Justice from Synapse Product Development, Inc. will show how Synapse uses Gi
 			- bucket @done
 			- bucket permissions @done
 		- Mac Client, MSC configured with demo server, hostname for manifest
-			- Mac OS
-			- Demo User
-			- Munkitools
-			- middleware-s3.py
-			- Middleware settings
-			- ManagedInstalls.plist
+			- Mac OS @done
+			- Demo User @done
+			- Munkitools @done
+			- middleware-s3.py @done
+			- Middleware settings @done
+			- ManagedInstalls.plist @done

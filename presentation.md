@@ -1,6 +1,6 @@
 autoscale: true
 
-# GitLab
+# GitLab for Fun and Continuous Deployment
 
 ^ Welcome, and thanks everybody for coming out to this meeting of NorthWest Apple Admins. Before we get going, I'd like to thank Chris for organizing this, and to Mallory and Tableau for hosting.
 
@@ -19,7 +19,7 @@ autoscale: true
 ^ Synapse is a engineering consulting company specializing in product development. We primarily specialize in mechanical, electrical, and firmware engineering. Clients come to us with products they would like to bring to market, and we help turn ideas into a manufacturable product.
 
 ---
-## The Tools
+# [fit] The Tools
 
 ^ I'll start with an overview of the tools involved, then give you a demonstration of a workflow I use in production.
 
@@ -74,7 +74,7 @@ git push origin master
 ^ In our case, that remote server is GitLab. GitLab is an open source competitor to GitHub. It's very easy to set up, just a package install on most Linux distros. The free edition is good enough for most environments, including ours, the paid version adds some nice bonus features and support. GitLab has lots of cool features, like the already-mentioned Git LFS support, as well as an issue tracker, wiki hosting, a container registry, and more, but I'm gong to focus on my favorite feature...
 
 ---
-# Gitlab CI
+# [fit] GitLab CI
 
 ---
 # What is CI?
@@ -114,7 +114,7 @@ roll_out:
     - ./make_it_live.py
 ```
 
-^ My favorite part about GitLab CI is that the file that defines your CI jobs is included in your git repo, and so is tracked along with the rest of your files. You can call out scripts, run inline commands, specify stage order, set variables, limit which runners should run the job, and lots more.
+^ My favorite part about GitLab CI is that the file that defines your CI jobs is included in your git repo, and so is tracked along with the rest of your files. You just add a file named `.gitlab-ci.yml` to your repo, and GitLab will try to start building your project. You can call out scripts, run inline commands, specify stage order, set variables, limit which runners should run the job, and lots more. So, lets take a look at a CI yml file.
 
 ---
 # .gitlab-ci.yml, annotated
@@ -143,7 +143,7 @@ Roll-out is marked as a deploy stage, so it starts when all test jobs complete. 
 ^ As you can see in this screenshot, the build passed. The test step completed successfully, and the deploy step wasn't run because this wasn't the master branch. For illustration purposes I enabled the manual option for Deploy, which can be started in the menu to the right of the build.
 
 ---
-# GitLab at Synapse
+# [fit] GitLab at Synapse
 
 ---
 # GitLab at Synapse
