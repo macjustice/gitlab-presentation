@@ -6,5 +6,9 @@
 	<array>
 		<string>production</string>
 	</array>
+	<key>managed_installs</key>
+	<array>
+		<string>Docker</string>
+	</array>
 </dict>
 </plist>
