@@ -33,16 +33,19 @@ autoscale: true
 - Designed for collaboration
 
 
-^ Git is a popular source code management tool. If you work with text files like scripts or config files on a regular basis, start using it. It allows you to track changes and to make branches to your code so you can experiment and increment safely. In a team environment, it also makes it easy for multiple people to contribute, and to track the source of any mistakes introduced.
+^ Git is a popular source code management tool. If you work with text files like scripts or config files on a regular basis, start using it. It allows you to track changes and to make branches to your code so you can experiment and increment safely. In a team environment it also makes it easy for multiple people to work on the same project simultaneously.
 
 ---
-# Git LFS
-## Large File Storage
+#[fit]Git + Big Files = :cold_sweat:
 
-Git + Big Files = :cold_sweat:
-Git + Git LFS + Big Files = :heart_eyes:
+^ Because Git is designed for text files, it chokes on big binary files such as packages or disk images.
 
-^ Because Git is designed for text files, it chokes on big binary files such as packages or disk images. Tools like Git Annex and Git Fat have been developed to address this, but they're unwieldy and not widely supported. GitHub created Git LFS to make it easy, and it's supported by major Git server products like GitHub, GitLab, and BitBucket.
+---
+#[fit]Git + Git LFS + Big Files = :heart_eyes:
+
+###(LFS = Large File Storage)
+
+^Tools like Git Annex and Git Fat have been developed to address this, but they're unwieldy and not widely supported. GitHub created Git LFS to make it easy, and it's supported by major Git server products like GitHub, GitLab, and BitBucket.
 
 ---
 # Example
@@ -60,14 +63,15 @@ git push origin master
 ^ A quick example. Install git-lfs, open an existing git repo, use `git lfs install` to initialize lfs in that repo, then specify the file types you would like to track. From here on, you can use standard git commands to stage files, commit your changes, then push them to a remote server, just like you would with a standard git repo.
 
 ---
-![80% left](https://gitlab.com/gitlab-com/gitlab-artwork/raw/master/wordmark/stacked_wm_no_bg.png)
+![80% left](https://gitlab.com/gitlab-com/gitlab-artwork/raw/master/logo/logo-extra-whitespace.png)
 
+#[fit]GitLab
 - Open Source
 - Self-hosted or gitlab.com
 - Freemium: Free and paid editions
 
 
-^ GitLab is an open source competitor to GitHub. It's very easy to set up, just a package install on most Linux distros. The free edition is good enough for most environments, including ours, the paid version adds some nice bonus features and support. GitLab has lots of cool features, like the already-mentioned Git LFS support, as well as an issue tracker, wiki hosting, a container registry, and more, but I'm gong to focus on my favorite feature...
+^ In our case, that remote server is GitLab. GitLab is an open source competitor to GitHub. It's very easy to set up, just a package install on most Linux distros. The free edition is good enough for most environments, including ours, the paid version adds some nice bonus features and support. GitLab has lots of cool features, like the already-mentioned Git LFS support, as well as an issue tracker, wiki hosting, a container registry, and more, but I'm gong to focus on my favorite feature...
 
 ---
 # Gitlab CI
@@ -76,10 +80,10 @@ git push origin master
 # What is CI?
 
 ## Continuous Integration
-- Push code :arrow_right: Build and Test :arrow_right: Pass/Fail
+- Push code :arrow_right: Build and Test :arrow_right: :no_entry: :white_check_mark:
 
 ## Continuous Deployment
-- Push code :arrow_right: Build, Test, Deploy :arrow_right: Pass/Fail
+- Push code :arrow_right: Build, Test, Deploy :arrow_right: :no_entry: :white_check_mark:
 
 ^ CI stands for Continuous Integration. In the software development world, this usually means your code is automatically tested and built every time you push it to the server, to reduce the likelihood of bugs cropping up. It has a sister concept, Continuous Deployment, which takes it one step further, using the same tools to then automatically put your code into production.
 
@@ -104,10 +108,10 @@ roll_out:
   when: manual
   only: master
   script:
-    - reticulate_splines.py
+    - ./reticulate_splines.py
     - rsync build/* user@remote_server:/deploy/path/
     - echo "here we goooo"
-    - make_it_live.py
+    - ./make_it_live.py
 ```
 
 ^ My favorite part about GitLab CI is that the file that defines your CI jobs is included in your git repo, and so is tracked along with the rest of your files. You can call out scripts, run inline commands, specify stage order, set variables, limit which runners should run the job, and lots more.
@@ -117,22 +121,20 @@ roll_out:
 
 ```yaml
 validate: # first job name
-  stage: test # first stage
+  stage: test # All 'test' stage jobs run before 'deploy' stage
   script: check_for_typos.sh # Run this script
 
 roll_out: # second job name
-  stage: deploy # Start when test stage completes
+  stage: deploy # Start only when all 'test' stage jobs complete
   when: manual # Require user interaction to start
   only: master # Only run on Master branch
   script:
-    - reticulate_splines.py # Call script in repo
+    - ./reticulate_splines.py # Call script in repo
     - rsync build/* user@remote_server:/deploy/path/ # inline command
-    - echo "here we goooo"
-    - make_it_live.py
 ```
 
-^ In this example, I have two jobs, validate and roll_out. Validate is in the test stage, so it goes first, and it just runs the "check_for_typos" script. It will run any time someone pushes to GitLab.
-roll_out comes next, since it has the deploy stage it will wait until all test jobs succeed. Since I've set `when` to manual, it will wait until I click go on the GitLab project page to start this job. I also specify to only run this job when there are updates to the master branch, because I don't want to push development branches to production. Finally, it runs a script, two inline commands, and another script. If everything suceeds, GitLab CI reports success fo the build.
+^ In this example, I have two jobs, validate and roll-out. Validate is in the test stage, so it goes first, and it just runs the "check for typos" script. It will run any time someone pushes to GitLab.
+Roll-out is marked as a deploy stage, so it starts when all test jobs complete. I've set `when` to manual, so roll-out won't start until I click go on the GitLab project page. I also specify to only run this job when there are updates to the master branch, because I don't want to push development branches to production. Finally, it runs a script, and an inline command. If everything suceeds, GitLab CI reports success.
 
 ---
 # Result
@@ -151,7 +153,7 @@ roll_out comes next, since it has the deploy stage it will wait until all test j
 - Build and test environments are documented :no_good: :snowflake:
 - Runner + physical computer = hardware testing! :computer::calling:
 
-^ We started using GitLab at Synapse 3 years ago for our engineers to host their project repos. It's easy to add accounts for our clients to access the code we write for them, and to get visibility into project progress through the issue tracker and milestone planning. Doing testing using Gitlab CI means  build and test environments are better documented, resulting in fewer "snowflakes". Installing the runner client on physical computers also allows us to do automated hardware tested on connected devices.
+^ We started using GitLab at Synapse 3 years ago for our engineers to host their project repos. It's easy to add accounts for our clients to access the code we write for them, and to get visibility into project progress through the issue tracker and milestone planning. Doing testing using Gitlab CI means  build and test environments are better documented, resulting in fewer "snowflakes". Installing the runner client on physical computers also allows us to do automated hardware testing on connected devices.
 
 ---
 # GitLab at Synapse
