@@ -8,58 +8,42 @@
 		<key>catalogs</key>
 		<array>
 			<string>testing</string>
-			<string>production</string>
 		</array>
+		<key>description</key>
+		<string></string>
+		<key>display_name</key>
+		<string>dummy_package</string>
 		<key>icon_hash</key>
-		<string>f7fac96aca43c085e8b2e246fdff27ea70875581dc701a41ac0eb51aaeca03e1</string>
+		<string>e5a8f478bfdaf3ae94bdd930302c3e31c9436f9d0b01e92aac0bdcbe5e35469a</string>
+		<key>icon_name</key>
+		<string>one-punch</string>
 		<key>installer_item_hash</key>
-		<string>f170610d95c188dee8433eff33c84696c1c8a39421de548a71a1258a458e1b21</string>
+		<string>d773af2a0bd11a58cdabafbdb6b7e6d12f4ea66540f82a44902927f1e449daf7</string>
 		<key>installer_item_location</key>
-		<string>Docker.dmg</string>
+		<string>dummy_package.pkg</string>
 		<key>installer_item_size</key>
-		<integer>112519</integer>
-		<key>installer_type</key>
-		<string>copy_from_dmg</string>
-		<key>installs</key>
-		<array>
-			<dict>
-				<key>CFBundleIdentifier</key>
-				<string>com.docker.docker</string>
-				<key>CFBundleName</key>
-				<string>Docker</string>
-				<key>CFBundleShortVersionString</key>
-				<string>1.12.0</string>
-				<key>CFBundleVersion</key>
-				<string>10871</string>
-				<key>minosversion</key>
-				<string>10.10</string>
-				<key>path</key>
-				<string>/Applications/Docker.app</string>
-				<key>type</key>
-				<string>application</string>
-				<key>version_comparison_key</key>
-				<string>CFBundleShortVersionString</string>
-			</dict>
-		</array>
-		<key>items_to_copy</key>
-		<array>
-			<dict>
-				<key>destination_path</key>
-				<string>/Applications</string>
-				<key>source_item</key>
-				<string>Docker.app</string>
-			</dict>
-		</array>
+		<integer>4</integer>
 		<key>minimum_os_version</key>
-		<string>10.10</string>
+		<string>10.5.0</string>
 		<key>name</key>
-		<string>Docker</string>
+		<string>dummy_package</string>
+		<key>receipts</key>
+		<array>
+			<dict>
+				<key>installed_size</key>
+				<integer>0</integer>
+				<key>packageid</key>
+				<string>com.github.munki.pkg.dummy_package</string>
+				<key>version</key>
+				<string>1.0</string>
+			</dict>
+		</array>
 		<key>uninstall_method</key>
-		<string>remove_copied_items</string>
+		<string>removepackages</string>
 		<key>uninstallable</key>
 		<true/>
 		<key>version</key>
-		<string>1.12.0</string>
+		<string>1.0</string>
 	</dict>
 </array>
 </plist>

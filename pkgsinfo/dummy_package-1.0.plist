@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>_metadata</key>
+	<dict>
+		<key>created_by</key>
+		<string>macj</string>
+		<key>creation_date</key>
+		<date>2016-08-18T21:52:05Z</date>
+		<key>munki_version</key>
+		<string>2.7.0.2753</string>
+		<key>os_version</key>
+		<string>10.11.6</string>
+	</dict>
+	<key>autoremove</key>
+	<false/>
+	<key>catalogs</key>
+	<array>
+		<string>testing</string>
+	</array>
+	<key>description</key>
+	<string></string>
+	<key>display_name</key>
+	<string>dummy_package</string>
+	<key>icon_name</key>
+	<string>one-punch</string>
+	<key>installer_item_hash</key>
+	<string>d773af2a0bd11a58cdabafbdb6b7e6d12f4ea66540f82a44902927f1e449daf7</string>
+	<key>installer_item_location</key>
+	<string>dummy_package.pkg</string>
+	<key>installer_item_size</key>
+	<integer>4</integer>
+	<key>minimum_os_version</key>
+	<string>10.5.0</string>
+	<key>name</key>
+	<string>dummy_package</string>
+	<key>receipts</key>
+	<array>
+		<dict>
+			<key>installed_size</key>
+			<integer>0</integer>
+			<key>packageid</key>
+			<string>com.github.munki.pkg.dummy_package</string>
+			<key>version</key>
+			<string>1.0</string>
+		</dict>
+	</array>
+	<key>uninstall_method</key>
+	<string>removepackages</string>
+	<key>uninstallable</key>
+	<true/>
+	<key>version</key>
+	<string>1.0</string>
+</dict>
+</plist>

@@ -24,9 +24,9 @@ autoscale: true
 ^ I'll start with an overview of the tools involved, then give you a demonstration of a workflow I use in production.
 
 ---
-# Git
+# [fit] Git
 
-![right fit](https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Git_icon.svg/1024px-Git_icon.svg.png)
+![right fit 50%](https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Git_icon.svg/1024px-Git_icon.svg.png)
 
 - Source Code Management
 - Tracks changes to text files
@@ -60,7 +60,7 @@ git push origin master
 ^ A quick example. Install git-lfs, open an existing git repo, use `git lfs install` to initialize lfs in that repo, then specify the file types you would like to track. From here on, you can use standard git commands to stage files, commit your changes, then push them to a remote server, just like you would with a standard git repo.
 
 ---
-![left](https://gitlab.com/gitlab-com/gitlab-artwork/raw/master/wordmark/stacked_wm_no_bg.png)
+![80% left](https://gitlab.com/gitlab-com/gitlab-artwork/raw/master/wordmark/stacked_wm_no_bg.png)
 
 - Open Source
 - Self-hosted or gitlab.com
@@ -76,18 +76,18 @@ git push origin master
 # What is CI?
 
 ## Continuous Integration
-- Push code :arrow_right: Test and Build :arrow_right: Pass/Fail
+- Push code :arrow_right: Build and Test :arrow_right: Pass/Fail
 
 ## Continuous Deployment
-- Push code :arrow_right: Test, Build, Deploy :arrow_right: Pass/Fail
+- Push code :arrow_right: Build, Test, Deploy :arrow_right: Pass/Fail
 
 ^ CI stands for Continuous Integration. In the software development world, this usually means your code is automatically tested and built every time you push it to the server, to reduce the likelihood of bugs cropping up. It has a sister concept, Continuous Deployment, which takes it one step further, using the same tools to then automatically put your code into production.
 
 ---
 # CI Runners
 
-![inline 40%](https://ssl.apple.com/osx/images/og.jpg?201606301611)![inline 40%](http://betanews.com/wp-content/uploads/2015/06/win10-logo.jpg)
-![inline 60%](https://upload.wikimedia.org/wikipedia/commons/a/af/Tux.png)![inline 60%](https://alexisduque.github.io/docker-presentation/images/logo-docker.png)
+![inline 10%](https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/OS_X_El_Capitan_logo.svg/2000px-OS_X_El_Capitan_logo.svg.png)![inline 10%](https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Windows_logo_-_2012.svg/2000px-Windows_logo_-_2012.svg.png)
+![inline 75%](https://upload.wikimedia.org/wikipedia/commons/a/af/Tux.png)![inline 50%](https://alexisduque.github.io/docker-presentation/images/logo-docker.png)
 
 ^ CI copies your code to a runner client, which can run on Linux, Mac, or Windows; virtual or physical. There it executes one or more jobs. Jobs can be run in sequence or parallel, and can be anything you can script. GitLab CI even supports Docker, so you even create temporary containers that execute the job, return the result, and are discarded.
 
@@ -99,7 +99,7 @@ validate:
   stage: test
   script: check_for_typos.sh
 
-deploy:
+roll_out:
   stage: deploy
   when: manual
   only: master
@@ -131,29 +131,34 @@ roll_out: # second job name
     - make_it_live.py
 ```
 
-[right]
-
-^ In this example, I have two jobs, validate and deploy. Validate is in the test stage, so it goes first, and it just runs the "check_for_typos" script.
+^ In this example, I have two jobs, validate and roll_out. Validate is in the test stage, so it goes first, and it just runs the "check_for_typos" script. It will run any time someone pushes to GitLab.
 roll_out comes next, since it has the deploy stage it will wait until all test jobs succeed. Since I've set `when` to manual, it will wait until I click go on the GitLab project page to start this job. I also specify to only run this job when there are updates to the master branch, because I don't want to push development branches to production. Finally, it runs a script, two inline commands, and another script. If everything suceeds, GitLab CI reports success fo the build.
+
+---
+# Result
+![inline fit](https://dl.dropboxusercontent.com/s/h83v91vms6qp0d1/2016-08-18%20at%201.13%20PM.png)
+
+---
+# GitLab at Synapse
 
 ---
 # GitLab at Synapse
 ## Client Work
-- Easy (and free) to include clients
-- Issue tracker for feedback and milestone planning
-- Build and test environments are documented, fewer "snowflakes"
-- Runner + physical computer = hardware testing! :computer: :calling:
+- Easy (and free) to include clients :free:
+- Issue tracker for feedback and milestone planning :bar_chart:
+- Build and test environments are documented :no_good: :snowflake:
+- Runner + physical computer = hardware testing! :computer::calling:
 
-^ We started using GitLab at Synapse 3 years ago for our engineers to host their project repos. It's easy to add accounts for our clients to access the code we write for them, and to get visibility into project progress through the issue tracker and milestone planning. Doing their testing using Gitlab CI means their build and test environments are better documented, resulting in fewer "snowflake" environments. Installing the runner client on physical computers also allows us to do automated hardware tested on connected devices.
+^ We started using GitLab at Synapse 3 years ago for our engineers to host their project repos. It's easy to add accounts for our clients to access the code we write for them, and to get visibility into project progress through the issue tracker and milestone planning. Doing testing using Gitlab CI means  build and test environments are better documented, resulting in fewer "snowflakes". Installing the runner client on physical computers also allows us to do automated hardware tested on connected devices.
 
 ---
 # GitLab at Synapse
 ## IT
-- Munki
+- Munki ![inline](http://munki.phys.ethz.ch/img/munki_logo.png)
   - Automatic upload to S3 host
-- Imagr
+- Imagr :computer:
   - Automatic `rsync`ing to site imaging servers
-- Ansible
+- Ansible :satellite:
   - Configuration Management for Linux servers
 
 ^ In the IT department we try to store as much of our scripts and configurations in GitLab as we can. This includes Munki and Imagr, which using CI and LFS are automatically deployed whenever a commit to the master branch is made. We use Ansible for configuration management of our Linux servers, changes pushed to master are automatically deployed after review.
@@ -164,9 +169,9 @@ roll_out comes next, since it has the deploy stage it will wait until all test j
 
 ^ Launch Mac Client VM. Prestaged with Managed Software Center, [s3-auth](https://github.com/waderobson/s3-auth) middleware script and settings, S3 bucket with R/W IAM user for CI and Read-Only user for Munki.
 
-^ Open munki-repo in Munki Admin. Add package to site_default manifest as an optional install. Save.
+^ Open munki-repo in Munki Admin. Add package to site_default manifest. Save.
 
-^ `cd gitlab_preseentation`
+^ `cd gitlab_presentation`
 `git add .`
 `git commit -m "added pkg"`
 `git push`
@@ -184,13 +189,17 @@ GREAT SUCCESS
 ---
 
 # More Information
-
-- [Tim Sutton on Jenkins at MacDevOps:YVR 2016](http://macdevops.ca/MDO2016/jenkins/Default.html) :arrow_left:
-- [Git LFS]
+- This presentation: github.com/macjustice/gitlab-presentation
+- [GitLab](www.gitlab.com)
+- [GitLab CI](https://about.gitlab.com/gitlab-ci/)
+- [Git LFS](https://git-lfs.github.com/)
+- MacDevOps:YVR 2016
+  - [Tim Sutton on Jenkins CI](http://macdevops.ca/MDO2016/jenkins/Default.html)
+  - [Wade Robson on Munki & S3](http://matx.ca/mdoyvr/2016/day2/munkimiddleware/Default.html)
 
 ---
 # Thanks!
 ### Twitter: @macjustice
 ### MacAdmins Slack: macjustice
 ### GitHub: macjustice
-###  wherever: macjustice
+### Wherever: macjustice
