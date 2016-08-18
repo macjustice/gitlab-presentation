@@ -1,34 +1,27 @@
-build-lists: true
 autoscale: true
 
 # GitLab
 
----
-
-# [fit] Introductions
+^ Welcome, and thanks everybody for coming out to this meeting of NorthWest Apple Admins. Before we get going, I'd like to thank Chris for organizing this, and to Mallory and Tableau for hosting.
 
 ---
 
 # Mac Justice
-- Yes, it's my real name!
-- Seattle native
-- First IT job: Corporate PC mines of Mukilteo
-- Started at Synapse 4 years ago as "IT Blackbelt"
+## Senior Support Specialist
+### Synapse Product Development
 
-^ West Seattle, to be specific.
-
-^ I studied history and anthropology in college, I stumbled into IT.
-
-^ It was a pretty cool title in 2012.
+^ My name is Mac Justice, I'm the Senior Support Specialist at Synapse Product Development.
 
 
 ---
 ![fit](http://www.cambridgeconsultants.com/sites/default/files/synapse_logo_and_products.jpg)
 
-^ We're a engineering consulting company specializing in product development. We primarily specialize in mechanical, electrical, and firmware engineering. Clients come to us with products they would like to bring to market, and we help turn ideas into a manufacturable product.
+^ Synapse is a engineering consulting company specializing in product development. We primarily specialize in mechanical, electrical, and firmware engineering. Clients come to us with products they would like to bring to market, and we help turn ideas into a manufacturable product.
 
 ---
 ## The Tools
+
+^ I'll start with an overview of the tools involved, then give you a demonstration of a workflow I use in production.
 
 ---
 # Git
@@ -40,10 +33,7 @@ autoscale: true
 - Designed for collaboration
 
 
-^ Git is a popular source code management tool. If you work with text files like scripts on a regular basis, you should absolutely check it out. It allows you to track changes and to make branches to your code so you can experiment and increment without risking your production code. You can see who made what changes when, which makes it a lot easier to track down mistakes.
-
-^ Get a taste at [try.github.io](try.github.io).
-Dig in deeper with [Pro Git](https://git-scm.com/book/en/v2).
+^ Git is a popular source code management tool. If you work with text files like scripts or config files on a regular basis, start using it. It allows you to track changes and to make branches to your code so you can experiment and increment safely. In a team environment, it also makes it easy for multiple people to contribute, and to track the source of any mistakes introduced.
 
 ---
 # Git LFS
@@ -52,7 +42,7 @@ Dig in deeper with [Pro Git](https://git-scm.com/book/en/v2).
 Git + Big Files = :cold_sweat:
 Git + Git LFS + Big Files = :heart_eyes:
 
-^ Because Git is designed for text files, it chokes on big binary files, such as packages or disk images. Tools like Git Annex and Git Fat have been developed to address this, but they're unwieldy and not widely supported. GitHub created Git LFS to make it easy, and it's supported by the major Git server products, like GitHub, GitLab, and BitBucket.
+^ Because Git is designed for text files, it chokes on big binary files such as packages or disk images. Tools like Git Annex and Git Fat have been developed to address this, but they're unwieldy and not widely supported. GitHub created Git LFS to make it easy, and it's supported by major Git server products like GitHub, GitLab, and BitBucket.
 
 ---
 # Example
@@ -67,7 +57,7 @@ git commit -m "Added Chrome"
 git push origin master
 ```
 
-^ A quick example. Install git-lfs, open an existing git repo, use `git lfs install` to initialize lfs in that repo, then specify the file types you would like to track. From here, you can use standard git commands to stage files, commit your changes, then push them to a remote server.
+^ A quick example. Install git-lfs, open an existing git repo, use `git lfs install` to initialize lfs in that repo, then specify the file types you would like to track. From here on, you can use standard git commands to stage files, commit your changes, then push them to a remote server, just like you would with a standard git repo.
 
 ---
 ![left](https://gitlab.com/gitlab-com/gitlab-artwork/raw/master/wordmark/stacked_wm_no_bg.png)
@@ -77,7 +67,7 @@ git push origin master
 - Freemium: Free and paid editions
 
 
-^ GitLab is an open source competitor to GitHub. It's very easy to set up, just a package install on most Linux distros. From there, you can integrate with LDAP, SAML, or another identity provider for authentication, or just use the built-in user management. It has lots of cool features, like the already-mentioned Git LFS support, an issue tracker, wiki hosting, a container registry, and more, but I'm gong to focus on my favorite feature...
+^ GitLab is an open source competitor to GitHub. It's very easy to set up, just a package install on most Linux distros. The free edition is good enough for most environments, including ours, the paid version adds some nice bonus features and support. GitLab has lots of cool features, like the already-mentioned Git LFS support, as well as an issue tracker, wiki hosting, a container registry, and more, but I'm gong to focus on my favorite feature...
 
 ---
 # Gitlab CI
@@ -88,10 +78,10 @@ git push origin master
 ## Continuous Integration
 - Push code :arrow_forward: Test and Build
 
-# Continuous Deployment
+## Continuous Deployment
 - Push code :arrow_forward: Test, Build, Deploy
 
-^ CI stands for Continuous Integration. In the software development world, this usually means your code is automatically tested every time you push it, to reduce the likelihood of bugs cropping up. However, the tools that enable this can also be used to automate all kinds of things. Check out Tim Sutton's talk on Jenkins, another CI tool, from MacDevOps:YVR 2016, which was a huge influence on this talk.
+^ CI stands for Continuous Integration. In the software development world, this usually means your code is automatically tested and built every time you push it to the server, to reduce the likelihood of bugs cropping up. It has a sister concept, Continuous Deployment, which takes it one step further, using the same tools to then automatically put your code into production.
 
 ---
 # CI Runners
@@ -99,19 +89,25 @@ git push origin master
 ![inline 40%](https://ssl.apple.com/osx/images/og.jpg?201606301611)![inline 40%](http://betanews.com/wp-content/uploads/2015/06/win10-logo.jpg)
 ![inline 60%](https://upload.wikimedia.org/wikipedia/commons/a/af/Tux.png)![inline 60%](https://alexisduque.github.io/docker-presentation/images/logo-docker.png)
 
-^ CI copies your code to a runner, which can run on Linux, Mac, or Windows, virtual or physical. There it executes a job, which is the CI term for a task. Jobs can be run in sequence or parallel, and can be essentially anything you can script. CI even supports Docker, so you even create temporary containers that execute the job, return the result, and are discarded.
+^ CI copies your code to a runner client, which can run on Linux, Mac, or Windows; virtual or physical. There it executes one or more jobs. Jobs can be run in sequence or parallel, and can be anything you can script. GitLab CI even supports Docker, so you even create temporary containers that execute the job, return the result, and are discarded.
 
 ---
 # .gitlab-ci.yml
 
 ```yaml
-job1:
-  script: "job1-script.sh"
+validate:
+  stage: test
+  script: check_for_typos.sh
 
-job2:
+deploy:
+  stage: deploy
+  image: python:2.7.10
   script:
-    - job2-script.py
-    - echo "Great success!"
+    - reticulate_splines.py
+    - rsync build/* user@remote_server:/deploy/path/
+    - echo "here we goooo"
+    - make_it_live.py
+  when: manual
 ```
 
 ^ My favorite part about GitLab CI is that the file that defines your CI jobs is included in your git repo, and so is tracked along with the rest of your files. You can call out scripts, run inline commands, specify stage order, set variables, limit which runners should run the job, and lots more.
@@ -123,18 +119,21 @@ job2:
 - Issue tracker for feedback and milestone planning
 - Build and test environments are documented, fewer "snowflakes"
 - Runner + physical computer = hardware testing! :computer: :calling:
-- Doxygen for auto-generated code documentation! (Planned)
+
+^ We started using GitLab at Synapse 3 years ago for our engineers to host their project repos. It's easy to add accounts for our clients to access the code we write for them, and to get visibility into project progress through the issue tracker and milestone planning. Doing their testing using Gitlab CI means their build and test environments are better documented, resulting in fewer "snowflake" environments. Installing the runner client on physical computers also allows us to do automated hardware tested on connected devices.
 
 ---
 # GitLab at Synapse
 ## IT
 - Munki
-  - Automatic deployment to S3
+  - Automatic upload to S3 host
 - Imagr
-  - runs `validateplist` as a simple test
-  - Changes rsynced to site imaging servers
-- AutoPkg (Planned)
-- AutoDMG (Planned)
+  - Automatic `rsync`ing to site imaging servers
+- Ansible
+  - Configuration Management for Linux servers
+
+^ In the IT department we try to store as much of our scripts and configurations in GitLab as we can. This includes Munki and Imagr, which using CI and LFS are automatically deployed whenever a commit to the master branch is made. We use Ansible for configuration management of our Linux servers, changes pushed to master are automatically deployed after review.
+
 
 ---
 # [fit]Demo
@@ -156,8 +155,14 @@ Open the log for the CI build
 GREAT SUCCESS
 
 ---
+# Q & A
+
+---
+Check out Tim Sutton's talk on Jenkins, another CI tool, from MacDevOps:YVR 2016, which was a huge influence on this talk.
+
+---
 # Thanks!
 ### Twitter: @macjustice
 ### MacAdmins Slack: macjustice
 ### GitHub: macjustice
-### basically wherever: macjustice
+###  wherever: macjustice
