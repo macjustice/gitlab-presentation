@@ -8,6 +8,7 @@
 		<key>catalogs</key>
 		<array>
 			<string>testing</string>
+			<string>production</string>
 		</array>
 		<key>icon_hash</key>
 		<string>f7fac96aca43c085e8b2e246fdff27ea70875581dc701a41ac0eb51aaeca03e1</string>
