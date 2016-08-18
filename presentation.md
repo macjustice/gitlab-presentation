@@ -138,6 +138,8 @@ roll_out comes next, since it has the deploy stage it will wait until all test j
 # Result
 ![inline fit](https://dl.dropboxusercontent.com/s/h83v91vms6qp0d1/2016-08-18%20at%201.13%20PM.png)
 
+^ As you can see in this screenshot, the build passed. The test step completed successfully, and the deploy step wasn't run because this wasn't the master branch. For illustration purposes I enabled the manual option for Deploy, which can be started in the menu to the right of the build.
+
 ---
 # GitLab at Synapse
 
@@ -166,6 +168,8 @@ roll_out comes next, since it has the deploy stage it will wait until all test j
 
 ---
 # [fit]Demo
+
+^ Open .gitlab-ci.yml and s3-deploy.sh. Walk through the yml, the deploy script, and show how variables are set in the GitLab project outside of version control that can be passed into CI
 
 ^ Launch Mac Client VM. Prestaged with Managed Software Center, [s3-auth](https://github.com/waderobson/s3-auth) middleware script and settings, S3 bucket with R/W IAM user for CI and Read-Only user for Munki.
 
