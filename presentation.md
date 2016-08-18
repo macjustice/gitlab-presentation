@@ -76,10 +76,10 @@ git push origin master
 # What is CI?
 
 ## Continuous Integration
-- Push code :arrow_forward: Test and Build
+- Push code :arrow_right: Test and Build :arrow_right: Pass/Fail
 
 ## Continuous Deployment
-- Push code :arrow_forward: Test, Build, Deploy
+- Push code :arrow_right: Test, Build, Deploy :arrow_right: Pass/Fail
 
 ^ CI stands for Continuous Integration. In the software development world, this usually means your code is automatically tested and built every time you push it to the server, to reduce the likelihood of bugs cropping up. It has a sister concept, Continuous Deployment, which takes it one step further, using the same tools to then automatically put your code into production.
 
@@ -101,16 +101,40 @@ validate:
 
 deploy:
   stage: deploy
-  image: python:2.7.10
+  when: manual
+  only: master
   script:
     - reticulate_splines.py
     - rsync build/* user@remote_server:/deploy/path/
     - echo "here we goooo"
     - make_it_live.py
-  when: manual
 ```
 
 ^ My favorite part about GitLab CI is that the file that defines your CI jobs is included in your git repo, and so is tracked along with the rest of your files. You can call out scripts, run inline commands, specify stage order, set variables, limit which runners should run the job, and lots more.
+
+---
+# .gitlab-ci.yml, annotated
+
+```yaml
+validate: # first job name
+  stage: test # first stage
+  script: check_for_typos.sh # Run this script
+
+roll_out: # second job name
+  stage: deploy # Start when test stage completes
+  when: manual # Require user interaction to start
+  only: master # Only run on Master branch
+  script:
+    - reticulate_splines.py # Call script in repo
+    - rsync build/* user@remote_server:/deploy/path/ # inline command
+    - echo "here we goooo"
+    - make_it_live.py
+```
+
+[right]
+
+^ In this example, I have two jobs, validate and deploy. Validate is in the test stage, so it goes first, and it just runs the "check_for_typos" script.
+roll_out comes next, since it has the deploy stage it will wait until all test jobs succeed. Since I've set `when` to manual, it will wait until I click go on the GitLab project page to start this job. I also specify to only run this job when there are updates to the master branch, because I don't want to push development branches to production. Finally, it runs a script, two inline commands, and another script. If everything suceeds, GitLab CI reports success fo the build.
 
 ---
 # GitLab at Synapse
@@ -158,7 +182,11 @@ GREAT SUCCESS
 # Q & A
 
 ---
-Check out Tim Sutton's talk on Jenkins, another CI tool, from MacDevOps:YVR 2016, which was a huge influence on this talk.
+
+# More Information
+
+- [Tim Sutton on Jenkins at MacDevOps:YVR 2016](http://macdevops.ca/MDO2016/jenkins/Default.html) :arrow_left:
+- [Git LFS]
 
 ---
 # Thanks!
