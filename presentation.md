@@ -91,7 +91,7 @@ git push origin master
 # CI Runners
 
 ![inline 10%](https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/OS_X_El_Capitan_logo.svg/2000px-OS_X_El_Capitan_logo.svg.png)![inline 10%](https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Windows_logo_-_2012.svg/2000px-Windows_logo_-_2012.svg.png)
-![inline 75%](https://upload.wikimedia.org/wikipedia/commons/a/af/Tux.png)![inline 50%](https://alexisduque.github.io/docker-presentation/images/logo-docker.png)
+![inline 75%](https://upload.wikimedia.org/wikipedia/commons/a/af/Tux.png)![inline fit](http://static.techfieldday.com/wp-content/uploads/2016/06/docker-logo-300.png)
 
 ^ CI copies your code to a runner client, which can run on Linux, Mac, or Windows; virtual or physical. There it executes one or more jobs. Jobs can be run in sequence or parallel, and can be anything you can script. GitLab CI even supports Docker, so you even create temporary containers that execute the job, return the result, and are discarded.
 
@@ -110,8 +110,6 @@ roll_out:
   script:
     - ./reticulate_splines.py
     - rsync build/* user@remote_server:/deploy/path/
-    - echo "here we goooo"
-    - ./make_it_live.py
 ```
 
 ^ My favorite part about GitLab CI is that the file that defines your CI jobs is included in your git repo, and so is tracked along with the rest of your files. You just add a file named `.gitlab-ci.yml` to your repo, and GitLab will try to start building your project. You can call out scripts, run inline commands, specify stage order, set variables, limit which runners should run the job, and lots more. So, lets take a look at a CI yml file.
@@ -167,6 +165,9 @@ Roll-out is marked as a deploy stage, so it starts when all test jobs complete. 
 
 ^ In the IT department we try to store as much of our scripts and configurations in GitLab as we can. This includes Munki and Imagr, which using CI and LFS are automatically deployed whenever a commit to the master branch is made. We use Ansible for configuration management of our Linux servers, changes pushed to master are automatically deployed after review.
 
+---
+# Infrastructure
+![inline 80%](GitLab-S3-Munki.png)
 
 ---
 # [fit]Demo
