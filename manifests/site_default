@@ -7,6 +7,8 @@
 		<string>testing</string>
 	</array>
 	<key>managed_installs</key>
-	<array/>
+	<array>
+		<string>dummy_package</string>
+	</array>
 </dict>
 </plist>

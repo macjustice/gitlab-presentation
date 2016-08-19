@@ -2,7 +2,7 @@ autoscale: true
 
 # GitLab for Fun and Continuous Deployment
 
-^ Welcome, and thanks everybody for coming out to this meeting of NorthWest Apple Admins. Before we get going, I'd like to thank Chris for organizing this, and to Mallory and Tableau for hosting.
+^ Welcome, and thanks everybody for coming out to this meeting of Apple Admins of the Pacific NorthWest. Before we get going, I'd like to thank Chris for organizing this, and to Mallory and Tableau for hosting.
 
 ---
 
