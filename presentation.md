@@ -1,6 +1,8 @@
 autoscale: true
 
-# GitLab for Fun and Continuous Deployment
+# Intro to GitLab
+## DevOps on a Shell Script Budget
+![filtered](https://gitlab.com/gitlab-com/gitlab-artwork/raw/master/logo/logo-extra-whitespace.png)
 
 ^ Welcome, and thanks everybody for coming out to this meeting of Apple Admins of the Pacific NorthWest. Before we get going, I'd like to thank Chris for organizing this, and to Mallory and Tableau for hosting.
 
