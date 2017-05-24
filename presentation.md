@@ -1,4 +1,5 @@
 autoscale: true
+theme: Next, 5
 
 # Intro to GitLab
 ## DevOps on a Shell Script Budget
