@@ -9,8 +9,12 @@ autoscale: true
 ---
 
 # Mac Justice
-## Senior Support Specialist
-### Synapse Product Development
+
+## Sr. Support Specialist
+## Synapse Product Development
+
+### @macjustice
+
 
 ^ My name is Mac Justice, I'm the Senior Support Specialist at Synapse Product Development.
 
@@ -18,12 +22,55 @@ autoscale: true
 ---
 ![fit](http://www.cambridgeconsultants.com/sites/default/files/synapse_logo_and_products.jpg)
 
-^ Synapse is a engineering consulting company specializing in product development. We primarily specialize in mechanical, electrical, and firmware engineering. Clients come to us with products they would like to bring to market, and we help turn ideas into a manufacturable product.
+^ #TODO Update image, talk w/ Jackie or Morgan
+
+^ Synapse is a engineering consulting company specializing in product development. **We primarily specialize in mechanical, electrical, and firmware engineering,** Clients come to us with products they would like to bring to market, and we help turn ideas into a manufacturable product.
 
 ---
-# [fit] The Tools
+# [fit] WANTED:
+# Git Repository Host
 
-^ I'll start with an overview of the tools involved, then give you a demonstration of a workflow I use in production.
+---
+# [fit] Must Have:
+1. Lots of projects!
+2. Sharable!
+3. Self-hosted!
+
+^ Synapse isn't a large company, but projects are our business. This means that though we have around 170 employees, we also have up to 50 projects going at any time, ranging in length from weeks to years. Not all need firmware development, but those that do need version control and storage, and as a company that does a lot of work with embedded Linux we moved to git early on.
+
+^ We also need to be able to share our git repositories with our clients. A big part of our consulting offering is working closely with clients and enabling them to engage with our development process.
+
+^ Finally, our clients require confidentiality. The exact definition varies from client to client, but the limitations can range from "Wait until release day, be cool" to "this never sees the light of day, and don't ever let it touch a single piece of silicon you don't own."
+
+---
+
+# [fit] Bonus Points:
+- Nice web UI
+- Bug tracking
+- Documentation
+- Continuous Integration (more on this!)
+- IT can play too
+
+^ So, git is one thing, but it would be nice to get some context too, right? We also wanted to get the ability for our developers and clients to file bug reports and include documentation. Our deveopers were also interested in adding continous integration to their workflow, which can improve code quality and shorten development time. Finally, we in IT were looking at putting more of our work in version control, to get all those same benefits the deveopers were getting, so we wanted to have access to the tool too.
+
+---
+
+![fit](https://gitlab.com/gitlab-com/gitlab-artwork/raw/master/wordmark/stacked_wm_no_bg.png)
+
+^ After considering some alternatives, such as GitHub Enterprise and Atlassian's BitBucket/JIRA/Bamboo stack, we settled on GitLab, largely because it was free and the employee doing the selection was a Ruby guy, and GL is built on Rails. Not the most rigorous of selection criteria, but it's been a great choice for us. We run GitLab Enterprise Edition on a VM in our VMware cluster, only recently upgrading from the free Community Edition
+
+---
+# [fit] About GitLab
+
+^ I'll start with an overview of a few GitLab features, then give you a demonstration of a workflow I use in production. Since GitLab is open source, you can find all the development at GitLab.com, which is itself a GitLab instance. They develop GitLab using GitLab! That's some good dogfood.
+
+---
+# Repository Host
+![inline](https://about.gitlab.com/images/press/screenshots/project-view.png)
+
+---
+# Issue Tracker
+![inline](https://about.gitlab.com/images/press/screenshots/issue-board.png)
 
 ---
 # [fit] Git
@@ -36,6 +83,12 @@ autoscale: true
 
 
 ^ Git is a popular source code management tool. If you work with text files like scripts or config files on a regular basis, start using it. It allows you to track changes and to make branches to your code so you can experiment and increment safely. In a team environment it also makes it easy for multiple people to work on the same project simultaneously.
+
+---
+
+# IT Uses
+- Munki
+- Imagr
 
 ---
 #[fit]Git + Big Files = :cold_sweat:
@@ -64,16 +117,7 @@ git push origin master
 
 ^ A quick example. Install git-lfs, open an existing git repo, use `git lfs install` to initialize lfs in that repo, then specify the file types you would like to track. From here on, you can use standard git commands to stage files, commit your changes, then push them to a remote server, just like you would with a standard git repo.
 
----
-![80% left](https://gitlab.com/gitlab-com/gitlab-artwork/raw/master/logo/logo-extra-whitespace.png)
 
-#[fit]GitLab
-- Open Source
-- Self-hosted or gitlab.com
-- Freemium: Free and paid editions
-
-
-^ In our case, that remote server is GitLab. GitLab is an open source competitor to GitHub. It's very easy to set up, just a package install on most Linux distros. The free edition is good enough for most environments, including ours, the paid version adds some nice bonus features and support. GitLab has lots of cool features, like the already-mentioned Git LFS support, as well as an issue tracker, wiki hosting, a container registry, and more, but I'm gong to focus on my favorite feature...
 
 ---
 # [fit] GitLab CI
