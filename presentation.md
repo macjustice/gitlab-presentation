@@ -31,6 +31,21 @@ theme: Next, 5
 # [fit] WANTED:
 # Git Repository Host
 
+<!-- ---
+# Wait, what's git?
+
+---
+# [fit] Git
+
+![right fit 50%](https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Git_icon.svg/1024px-Git_icon.svg.png)
+
+- Source Code Management
+- Tracks changes to text files
+- Designed for collaboration
+
+
+^ Git is a popular source code management tool. If you work with plain text files like scripts or config files on a regular basis, it's a great tool to learn. It allows you to track changes and to make branches to your code so you can experiment and increment safely. In a team environment it also makes it easy for multiple people to work on the same project simultaneously. -->
+
 ---
 # [fit] Must Have:
 1. Lots of projects!
