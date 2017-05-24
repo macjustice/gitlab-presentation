@@ -63,11 +63,10 @@ theme: Next, 5
 # [fit] Bonus Points:
 - Nice web UI
 - Bug tracking
-- Documentation
-- Continuous Integration (more on this!)
+- Continuous Integration
 - IT can play too
 
-^ So, git is one thing, but it would be nice to get some context too, right? We also wanted to get the ability for our developers and clients to file bug reports and include documentation. Our deveopers were also interested in adding continous integration to their workflow, which can improve code quality and shorten development time. Finally, we in IT were looking at putting more of our work in version control, to get all those same benefits the deveopers were getting, so we wanted to have access to the tool too.
+^ So, git is one thing, but it would be nice to get some context too, right? Not everyone is a terminal jockey, so a good web UI is important for keeping interested parties involved. We also wanted to get the ability for our developers and clients to file bug reports. Our deveopers were also interested in adding continous integration to their workflow, which can improve code quality and shorten development time. Finally, we in IT were looking at putting more of our work in version control, to get all those same benefits the deveopers were getting, so we wanted to have access to the tool too.
 
 ---
 
@@ -76,37 +75,47 @@ theme: Next, 5
 ^ After considering some alternatives, such as GitHub Enterprise and Atlassian's BitBucket/JIRA/Bamboo stack, we settled on GitLab, largely because it was free and the employee doing the selection was a Ruby guy, and GL is built on Rails. Not the most rigorous of selection criteria, but it's been a great choice for us. We run GitLab Enterprise Edition on a VM in our VMware cluster, only recently upgrading from the free Community Edition
 
 ---
-# [fit] About GitLab
-
-^ I'll start with an overview of a few GitLab features, then give you a demonstration of a workflow I use in production. Since GitLab is open source, you can find all the development at GitLab.com, which is itself a GitLab instance. They develop GitLab using GitLab! That's some good dogfood.
-
----
-# Repository Host
-![inline](https://about.gitlab.com/images/press/screenshots/project-view.png)
-
----
-# Issue Tracker
-![inline](https://about.gitlab.com/images/press/screenshots/issue-board.png)
+# General Info
+- Open Source
+- Gitlab.com
+  - Personal public and private repos
+  - "Free forever"
+  - Where the sausage gets made
 
 ---
-# [fit] Git
+# General Info
+## Self Hosted Pricing Tiers
+- Community Edition (CE) - Free, community support, fully featured
+- Enterprise Edition Starter (EES) - $40/user/year, next business day support, extra features
+- Enterprise Edition Premium (EEP) - $200/user/year, 4 hour support, training, advanced features
 
-![right fit 50%](https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Git_icon.svg/1024px-Git_icon.svg.png)
-
-- Source Code Management
-- Tracks changes to text files
-- Designed for collaboration
-
-
-^ Git is a popular source code management tool. If you work with text files like scripts or config files on a regular basis, start using it. It allows you to track changes and to make branches to your code so you can experiment and increment safely. In a team environment it also makes it easy for multiple people to work on the same project simultaneously.
+^ GitLab has three pricing tiers. We used Community Edition until just this past year when we decided support and a few of the more advanced features were worth it to us, but 95% of what we use GitLab for is in CE.
 
 ---
+# General Info
+## Set Up
 
-# IT Uses
+- "Omnibus" package
+- Docker Container
+- Pre-built VMs (Amazon EC2/LightSail, Digital Ocean)
+- Many other methods
+
+^ GitLab has a standard "Omnibus" package that is very easy to install on several common flavors of Linux. There's also Docker containers if you're a cool kid, and pre-built VMs available on Amazon Web Services or Digital Ocean.
+
+^ I absolutely reccomend trying AWS or Digital Ocean if you want a running Gitlab instance set up in just a minute or two. You can do this for cents per hour, it's a great way to kick the tires on a live system.
+
+^ You can also install from source, there's a Chef cookbook, some kind of Kubernetes setup, and all sorts of other options as well.
+
+---
+![](https://media.giphy.com/media/26DOs997h6fgsCthu/giphy.gif?response_id=5925261e8c00051b4993c8e9)
+
+---
+# My Uses
 - Munki
 - Imagr
 
 ---
+
 #[fit]Git + Big Files = :cold_sweat:
 
 ^ Because Git is designed for text files, it chokes on big binary files such as packages or disk images.
