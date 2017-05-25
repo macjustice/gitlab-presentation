@@ -1,4 +1,3 @@
-autoscale: true
 theme: Next, 5
 
 # Intro to GitLab
@@ -14,10 +13,8 @@ theme: Next, 5
 ## Sr. Support Specialist
 ## Synapse Product Development
 
-### @macjustice
 
-
-^ My name is Mac Justice, I'm the Senior Support Specialist at Synapse Product Development.
+^ My name is Mac Justice, I'm the Senior Support Specialist at Synapse Product Development. This is my first time at PSU, I guess it's pretty cool to have the closer slot.
 
 
 ---
@@ -75,15 +72,15 @@ theme: Next, 5
 ^ After considering some alternatives, such as GitHub Enterprise and Atlassian's BitBucket/JIRA/Bamboo stack, we settled on GitLab, largely because it was free and the employee doing the selection was a Ruby guy, and GL is built on Rails. Not the most rigorous of selection criteria, but it's been a great choice for us. We run GitLab Enterprise Edition on a VM in our VMware cluster, only recently upgrading from the free Community Edition
 
 ---
-# General Info
-- Open Source
+# GitLab Administration
+- Open Source :free::beer:, :free::loudspeaker:
 - Gitlab.com
   - Personal public and private repos
   - "Free forever"
   - Where the sausage gets made
 
 ---
-# General Info
+# GitLab Administration
 ## Self Hosted Pricing Tiers
 - Community Edition (CE) - Free, community support, fully featured
 - Enterprise Edition Starter (EES) - $40/user/year, next business day support, extra features
@@ -92,83 +89,134 @@ theme: Next, 5
 ^ GitLab has three pricing tiers. We used Community Edition until just this past year when we decided support and a few of the more advanced features were worth it to us, but 95% of what we use GitLab for is in CE.
 
 ---
-# General Info
+# GitLab Administration
 ## Set Up
 
-- "Omnibus" package
+- "Omnibus" package for Linux
 - Docker Container
 - Pre-built VMs (Amazon EC2/LightSail, Digital Ocean)
 - Many other methods
 
-^ GitLab has a standard "Omnibus" package that is very easy to install on several common flavors of Linux. There's also Docker containers if you're a cool kid, and pre-built VMs available on Amazon Web Services or Digital Ocean.
+![right fit](https://design.ncsu.edu/it/wp-content/uploads/2010/08/pkgicon.png)
+
+^ GitLab has a standard "Omnibus" package that is very easy to install on several common flavors of Linux. There are also Docker containers if you're one of the cool kids, and pre-built VMs available on Amazon Web Services or Digital Ocean.
 
 ^ I absolutely reccomend trying AWS or Digital Ocean if you want a running Gitlab instance set up in just a minute or two. You can do this for cents per hour, it's a great way to kick the tires on a live system.
 
 ^ You can also install from source, there's a Chef cookbook, some kind of Kubernetes setup, and all sorts of other options as well.
 
 ---
+# GitLab Administration
+## Authentication & Authorization
+- Pick one or many!
+  - Internal
+  - LDAP: Active Directory, Open Directory, beyond?
+  - OmniAuth: Google, FaceBook, Twitter, GitHub, BitBucket, Shibboleth, Azure
+  - CAS
+  - SAML
+  - Okta
+
+^ There are a ton of methods to enable you and your users to log in to your GitLab. You can mix and match. At Synapse, we use G Suite SAML for employee login, cross-referenced with LDAP for group permissions. Clients use Google Oauth via the OmniAuth feature.
+
+---
+# GitLab Administration
+## Etc.
+- Permissions: per-project, per-group
+- External users
+
+---
 ![](https://media.giphy.com/media/26DOs997h6fgsCthu/giphy.gif?response_id=5925261e8c00051b4993c8e9)
 
----
-# My Uses
-- Munki
-- Imagr
+^ So, that's all pretty exciting right? Not really? Yeah, I know. Here comes the good stuff, though.
 
 ---
+# Git LFS!!
+# GitLab CI/CD!!
 
+^ These are easily my two most favorite features of GitLab, and now I'm going to show you how I used them to set up a pretty cool push-to-deploy workflow for Imagr and Munki
+
+---
 #[fit]Git + Big Files = :cold_sweat:
 
-^ Because Git is designed for text files, it chokes on big binary files such as packages or disk images.
+^ Because Git is designed for text files, it chokes on big binary files such as packages or disk images, you know, the ones we deal in all day long.
 
 ---
-#[fit]Git + Git LFS + Big Files = :heart_eyes:
+#[fit]Git + Git LFS +
+#[fit]Big Files = :heart_eyes:
 
 ###(LFS = Large File Storage)
 
-^Tools like Git Annex and Git Fat have been developed to address this, but they're unwieldy and not widely supported. GitHub created Git LFS to make it easy, and it's supported by major Git server products like GitHub, GitLab, and BitBucket.
+^ A few tools have been created to address this. GitHub created Git LFS to make it easy, and it's supported by major Git server products like GitHub, GitLab, and BitBucket.
+
+^ Git LFS works by allowing your local git repo to only contain the versions of large files relevant to your current checkout. The git repo itself contains pointer files that LFS uses to fetch the neccesary files from GitLab.
+
+^ Enabling it in a GitLab project is as simple as clicking a checkbox and making sure you have sufficient space on your server. You can limit how much space each project has for LFS storage,
+
+^ Git LFS can handle pretty big files. The biggest I've had cause to use was a 7.7GB El Capitan AutoDMG image, which was no trouble at all.
+
+^ See this [blog post](https://about.gitlab.com/2017/01/30/getting-started-with-git-lfs-tutorial/)
 
 ---
-# Example
+# Git LFS Example
 ```bash
+# system-wide setup
 brew install git-lfs
-cd munki-repo
 git lfs install
-git lfs track "*.dmg"
 
+# repo setup
+cd munki-repo
+git lfs track "*.dmg"
+git add .gitattributes && git commit -m "Added LFS tracking for DMGs"
+
+# now add and commit dmgs like any other file!
 git add pkgs/GoogleChrome.dmg
 git commit -m "Added Chrome"
 git push origin master
 ```
 
-^ A quick example. Install git-lfs, open an existing git repo, use `git lfs install` to initialize lfs in that repo, then specify the file types you would like to track. From here on, you can use standard git commands to stage files, commit your changes, then push them to a remote server, just like you would with a standard git repo.
-
+^ A quick example. Install git-lfs and use `git lfs install` to finalize the install for your system. Now go to your repo and specify the file types you would like to track, which are recorded in a `.gitattributes` file. From here on, you can use standard git commands to stage files, commit your changes, and push them to a remote server, just like you would with a standard git repo.
 
 
 ---
-# [fit] GitLab CI
+# [fit] GitLab CI/CD
+
+^ Now the real fun starts.
 
 ---
-# What is CI?
+# What is CI/CD?
 
 ## Continuous Integration
-- Push code :arrow_right: Build and Test :arrow_right: :no_entry: :white_check_mark:
+- Push code to GitLab :arrow_right: Build, Test :arrow_right: :no_entry: :white_check_mark:
 
 ## Continuous Deployment
-- Push code :arrow_right: Build, Test, Deploy :arrow_right: :no_entry: :white_check_mark:
+- Push code to GitLab :arrow_right: Build, Test :arrow_right: Deploy :arrow_right: :no_entry: :white_check_mark:
 
 ^ CI stands for Continuous Integration. In the software development world, this usually means your code is automatically tested and built every time you push it to the server, to reduce the likelihood of bugs cropping up. It has a sister concept, Continuous Deployment, which takes it one step further, using the same tools to then automatically put your code into production.
+
+^ In GitLab terminology, each step your CI process takes is called a job, and the full set that run each time is called a pipeline.
+
+^ By default, if something goes awry at any point, like a script exiting with an error, the CI/CD pipeline stops and indicates a failure. This way, if you write your jobs right, you can catch mistakes
+
+^ You may have heard of Jenkins. GitLab CI is a similar tool, but I think GitLab's implementation is better in a few ways that make a big difference.
 
 ---
 # CI Runners
 
-![inline 10%](https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/OS_X_El_Capitan_logo.svg/2000px-OS_X_El_Capitan_logo.svg.png)![inline 10%](https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Windows_logo_-_2012.svg/2000px-Windows_logo_-_2012.svg.png)
-![inline 75%](https://upload.wikimedia.org/wikipedia/commons/a/af/Tux.png)![inline fit](http://static.techfieldday.com/wp-content/uploads/2016/06/docker-logo-300.png)
+![inline 75%](https://upload.wikimedia.org/wikipedia/commons/a/af/Tux.png)![inline 10%](https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/OS_X_El_Capitan_logo.svg/2000px-OS_X_El_Capitan_logo.svg.png)
+![inline 10%](https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Windows_logo_-_2012.svg/2000px-Windows_logo_-_2012.svg.png)![inline fit](http://static.techfieldday.com/wp-content/uploads/2016/06/docker-logo-300.png)
 
-^ CI copies your code to a runner client, which can run on Linux, Mac, or Windows; virtual or physical. There it executes one or more jobs. Jobs can be run in sequence or parallel, and can be anything you can script. GitLab CI even supports Docker, so you even create temporary containers that execute the job, return the result, and are discarded.
+^ So, where does this actually happen?
+
+^ GitLab has a client, called the GitLab CI runner, which can run on Linux, MacOS, or Windows; virtual or physical. Once you have a runner installed, it will wait patiently for GitLab to assign it jobs. Jobs can be run in sequence or parallel, and can be anything you can script. GitLab CI even supports Docker, so you even create temporary containers that execute the job, return the result, and are discarded, giving you a clean and predictable execution environment every time.
+
+^ The GitLab runner even has an "autoscale" mode, which uses the Docker Machine tool to create temporary VMs in a cloud provider like AWS or Digital Ocean. The VMs execute their assigned jobs, return the results, and are terminated and deleted.
+
+^ Runners can be shared by many GitLab projects, or you can create runners reserved for specific projects.
+
+^ At Synapse, since we do hardware development, some projects even have Raspberry Pi runners that interact with physical test devices so our firmware develpers can quickly see how their code will behave on the product being built.
 
 ---
 # .gitlab-ci.yml
-
 ```yaml
 validate:
   stage: test
@@ -183,11 +231,10 @@ roll_out:
     - rsync build/* user@remote_server:/deploy/path/
 ```
 
-^ My favorite part about GitLab CI is that the file that defines your CI jobs is included in your git repo, and so is tracked along with the rest of your files. You just add a file named `.gitlab-ci.yml` to your repo, and GitLab will try to start building your project. You can call out scripts, run inline commands, specify stage order, set variables, limit which runners should run the job, and lots more. So, lets take a look at a CI yml file.
+^ My favorite part about GitLab CI is that the file that defines your CI jobs is included in your git repo, and so is tracked along with the rest of your files. You just add a file named `.gitlab-ci.yml` to your repo, and GitLab will try to start building your project on an available runner. You can call out scripts, run inline commands, specify stage order, set variables, limit which runners should run the job, and lots more. So, lets take a look at a CI yml file.
 
 ---
 # .gitlab-ci.yml, annotated
-
 ```yaml
 validate: # first job name
   stage: test # All 'test' stage jobs run before 'deploy' stage
@@ -202,14 +249,21 @@ roll_out: # second job name
     - rsync build/* user@remote_server:/deploy/path/ # inline command
 ```
 
-^ In this example, I have two jobs, validate and roll-out. Validate is in the test stage, so it goes first, and it just runs the "check for typos" script. It will run any time someone pushes to GitLab.
-Roll-out is marked as a deploy stage, so it starts when all test jobs complete. I've set `when` to manual, so roll-out won't start until I click go on the GitLab project page. I also specify to only run this job when there are updates to the master branch, because I don't want to push development branches to production. Finally, it runs a script, and an inline command. If everything suceeds, GitLab CI reports success.
+^ In this example, I have two jobs, validate and roll-out. Validate is in the test stage, so it goes first, and it just runs the "check for typos" script. It will run any time someone pushes a commit to the parent GitLab project.
+
+^ The second job, Roll-out, is marked as a deploy stage, so it only starts when all test jobs complete successfully. I've set `when` to manual, so roll-out won't start until I click an execute button on the GitLab project page. I also specify to only run this job when there are updates to the master branch, because I don't want to push development branches to production. Finally, it runs a script, and an inline command.
+
+^ If both jobs succeed, GitLab CI reports success.
 
 ---
 # Result
 ![inline fit](https://dl.dropboxusercontent.com/s/h83v91vms6qp0d1/2016-08-18%20at%201.13%20PM.png)
 
 ^ As you can see in this screenshot, the build passed. The test step completed successfully, and the deploy step wasn't run because this wasn't the master branch. For illustration purposes I enabled the manual option for Deploy, which can be started in the menu to the right of the build.
+
+^ TODO update screenshot with pipeline graph
+
+################################
 
 ---
 # [fit] GitLab at Synapse
