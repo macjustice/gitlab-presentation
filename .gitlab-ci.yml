@@ -1,9 +1,15 @@
 # This will push changes to the munki-repo to s3 bucket
 
-deploy:
-  image: macjustice/git-lfs-s3cmd
+validate:
+  image: ubuntu
+  stage: test
+  script: ci_scripts/check_for_typos.sh
+
+roll_out:
+  image: python:2
   stage: deploy
+  # when: manual
+  # only: master
   script:
-    - ./s3-deploy.sh
-  variables:
-    BUCKET_PATH: "s3://gitlab-munki-demo"
+    - ci_scripts/prep_deploy.sh
+    - ci_scripts/nyan.py
