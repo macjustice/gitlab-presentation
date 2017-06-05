@@ -19,6 +19,8 @@ https://docs.gitlab.com/ce/university/README.html
 https://docs.google.com/presentation/d/1RcZhFmn5VPvoFu6UMxhMOy7lAsToeBZRjLRn0LIdaNc/edit#slide=id.p5
 https://about.gitlab.com/2015/05/18/simple-words-for-a-gitlab-newbie/
 
+[Comparison Data sheet](https://about.gitlab.com/pdfs/GitLab_Enterprise_Edition_2-Pager.pdf)
+
 ## Examples
 Munki
 Imagr
@@ -27,6 +29,16 @@ Packages - Autobuild?
 Autopkg
 
 ## Presentation Outline
+1. What Synapse Needed
+2. What GitLab Can Do (reduce? How much needed here?)
+3. What I Do With GitLab
+	4. Git LFS
+	5. GitLab CI.yml
+	6. Munki
+	7. Imagr
+4. Demo (PSU)
+
+
 1. Who am I? What is Synapse?
 2. What am I about to do?
 1. What is Git?
