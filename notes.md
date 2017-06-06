@@ -3,17 +3,53 @@ GitLab [blog post](https://about.gitlab.com/2016/08/05/continuous-integration-de
 ## Description
 Mac Justice from Synapse Product Development, Inc. will show how Synapse uses GitLab to create a unified workflow to automate development, testing and deployment of Mac management tools like Munki and Imagr.
 
+## Questions to answer
+- What makes GL compelling for a small organization?
+
+## Notes for updating for PSU/YVR
+- Explain AWS integration in more detail
+- Get AutoPKG involved
+- Add makecatalogs info
+- Get Cloud/DevOps capabilities on the cheap
+- Give current cost averages for s3 service
+- https://macadmins.slack.com/archives/macadminops_sea/p1484851760000091
+
+## Resources
+https://docs.gitlab.com/ce/university/README.html
+https://docs.google.com/presentation/d/1RcZhFmn5VPvoFu6UMxhMOy7lAsToeBZRjLRn0LIdaNc/edit#slide=id.p5
+https://about.gitlab.com/2015/05/18/simple-words-for-a-gitlab-newbie/
+
+[Comparison Data sheet](https://about.gitlab.com/pdfs/GitLab_Enterprise_Edition_2-Pager.pdf)
+
+## Examples
+Munki
+Imagr
+Profiles - sign and encrypt!
+Packages - Autobuild?
+Autopkg
+
 ## Presentation Outline
+1. What Synapse Needed
+2. What GitLab Can Do (reduce? How much needed here?)
+3. What I Do With GitLab
+	4. Git LFS
+	5. GitLab CI.yml
+	6. Munki
+	7. Imagr
+4. Demo (PSU)
+
+
 1. Who am I? What is Synapse?
+2. What am I about to do?
 1. What is Git?
 	- What's it for?
-2. Git-LFS
-	- What's that?
 4. What is Gitlab?
 	- Why do you care?
 	- Your organization's own private GitHub
 	- Free and Open Source "Community Ediiton" (CE), or paid premium "Enterprise Edition" (EE)
 	- Includes tools for bug tracking, code review, documentation,
+6. git-lfs
+	- What's that?
 5. What is Gitlab CI?
 	- Continuous Integration - whenever you make a change, tests, deployment, or other actions can happen automatically
   - Continuous Delivery/Deployment

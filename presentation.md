@@ -1,175 +1,337 @@
-autoscale: true
+autoscale:true
+theme: Next, 9
 
-# GitLab for Fun and Continuous Deployment
-
-^ Welcome, and thanks everybody for coming out to this meeting of Apple Admins of the Pacific NorthWest. Before we get going, I'd like to thank Chris for organizing this, and to Mallory and Tableau for hosting.
+# Intro to GitLab
+## DevOps on a Shell Script Budget
+![filtered 150%](images/gitlab_no_words.png)
 
 ---
 
 # Mac Justice
-## Senior Support Specialist
-### Synapse Product Development
+
+## Sr. Support Specialist
+## Synapse Product Development
 
 ^ My name is Mac Justice, I'm the Senior Support Specialist at Synapse Product Development.
 
+^ I think I've heard every joke there is about my name, but feel free to try.
 
 ---
-![fit](http://www.cambridgeconsultants.com/sites/default/files/synapse_logo_and_products.jpg)
+![fit](images/synapse_bar.png)
 
-^ Synapse is a engineering consulting company specializing in product development. We primarily specialize in mechanical, electrical, and firmware engineering. Clients come to us with products they would like to bring to market, and we help turn ideas into a manufacturable product.
+^ Synapse is a engineering consulting company specializing in hardware development. We specialize in mechanical, electrical, and firmware engineering. Clients come to us with products they would like to create, and we help turn ideas into a manufacturable product.
 
----
-# [fit] The Tools
-
-^ I'll start with an overview of the tools involved, then give you a demonstration of a workflow I use in production.
+^ Most of our client work is under NDA, but I can say a few folks here work for companies that are our customers.
 
 ---
-# [fit] Git
+![inline 100%](images/git.png)
 
-![right fit 50%](https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Git_icon.svg/1024px-Git_icon.svg.png)
+^ The firmware developers I work with need a version control system, and since many work with embedded Linux they're very comfortable with git.
 
-- Source Code Management
-- Tracks changes to text files
-- Designed for collaboration
-
-
-^ Git is a popular source code management tool. If you work with text files like scripts or config files on a regular basis, start using it. It allows you to track changes and to make branches to your code so you can experiment and increment safely. In a team environment it also makes it easy for multiple people to work on the same project simultaneously.
+^ So, they looked into setting up a central git repo host.
 
 ---
-#[fit]Git + Big Files = :cold_sweat:
+![100% inline](images/gitolite.jpg)
 
-^ Because Git is designed for text files, it chokes on big binary files such as packages or disk images.
+^ First, Synapse used Gitolite, a free open source tool which gets the job done but with very few frills.
 
----
-#[fit]Git + Git LFS + Big Files = :heart_eyes:
-
-###(LFS = Large File Storage)
-
-^Tools like Git Annex and Git Fat have been developed to address this, but they're unwieldy and not widely supported. GitHub created Git LFS to make it easy, and it's supported by major Git server products like GitHub, GitLab, and BitBucket.
+^ It has no GUI, so user interaction is strictly via ssh. It's pretty much just a git host with access control features.
 
 ---
-# Example
+# Git Host Wish List
+- Web GUI
+- Issue tracking
+- Inexpensive
+
+^ In 2012, as Synapse grew, we started to see a need for a more full featured repo host.
+
+^ We wanted a nice web GUI, so our engineers and clients can share input and collaborate easily. It also helps us manage permissions and the like on the administrative side.
+
+^ ctd next slide
+
+---
+# Git Host Wish List
+- Web GUI
+- Issue tracking
+- Inexpensive
+
+^ Some projects used JIRA for bug tracking, but it was expensive and cumbersome to manage for a small company with many short-term projects. An integrated issue tracker would be a plus.
+
+^ Additionally, we wanted a tool that wouldn't cost us an arm and a leg. Again, Synapse is not a very big company, and software development is only part of our service offering.
+
+---
+
+![fit](images/gitlab.png)
+
+^ After considering some alternatives, such as GitHub Enterprise and Atlassian's BitBucket/JIRA/Bamboo stack, we settled on GitLab, largely because it was free and easy to set up.
+
+^ The employee doing the selection was also a Ruby guy, and GL is built on Rails.
+
+^ Not the most rigorous of selection criteria, but the product has grown a lot in the 5 years we've been using it, and it's been a big win for us.
+
+---
+# [fit] GitLab Administration
+
+^ So let's talk really quick about what it takes to run your own GitLab server.
+
+---
+# GitLab Administration
+## Self Hosted Tiers
+
+Edition | Price | Support | Features
+---|---|---|---
+Community | Free | Nope | All major functionality
+Enterprise Starter | $40/user/year | Next Day | More permissions controls
+Enterprise Premium | $200/user/year | 4 Hour | High Availability, other advanced features
+
+^ GitLab has tiered editions for the self-hosted product. We used Community Edition until just this past year when we decided support and a few of the more advanced features were worth it to us, but 95% of what we use GitLab for is in CE.
+
+---
+# GitLab Administration
+## Easy Set Up
+
+- "Omnibus" package for Linux
+- Docker Container
+- Pre-built VMs (Amazon EC2/LightSail, Digital Ocean)
+
+^ At Synapse we host GitLab on an Ubuntu VM in our VMware cluster.
+
+^ Reccomend trying AWS or Digital Ocean if you want a running GitLab instance set up in just a minute or two.
+
+^ GitLab releases feature updates every month, and several patchs in between those. It's very actively developed.
+
+---
+# GitLab Administration
+## Authentication & Authorization
+- Built-in
+- LDAP
+- OAuth & SAML
+
+^ There are a ton of methods to enable you and your users to log in to your GitLab. You can mix and match. At Synapse, we use G Suite SAML for employee login, cross-referenced with LDAP for group permissions. Synapse customers use Google Oauth via the OmniAuth feature.
+
+---
+# GitLab Administration
+## Integrations
+
+![inline](images/slack.png)![inline](images/hipchat.png)![inline 200%](images/teams.png)
+![inline 75%](images/webhook_logo.png)
+
+^ GitLab is extremely integration friendly. It has prebuilt notification services for the major team chat services, including Slack slash commands. It has a handy RESTful API, as well as customizable webhooks to interact with other services.
+
+---
+![34%](images/ok.png)
+
+<!-- ![](https://media.giphy.com/media/26DOs997h6fgsCthu/giphy.gif?response_id=5925261e8c00051b4993c8e9) -->
+
+^ By this time you might be thinking, OK, I've seen server applications get installed and have users and all that. What's cool about GitLab?
+
+---
+# [fit] Git LFS
+
+^ In 2015, GitLab announced Git LFS, or Large File Storage.
+
+---
+#[fit]Git + ![inline](images/package.png)![inline](images/dmg.png) = :cold_sweat:
+
+^ Because Git is designed for text files, it's not great at managing binary files, especially large ones.
+
+---
+#[fit]Git LFS + ![inline](images/package.png)![inline](images/dmg.png) = :heart_eyes:
+
+^ A few tools have been created to address this. GitHub created Git LFS to make it easy, and it's supported by major Git server products like GitHub, GitLab, and BitBucket.
+
+^ Git LFS works by using pointer files to indicate changes to large files while leaving all but the currently checked out version on the central server.
+
+---
+#[fit]Git LFS + ![inline](images/package.png)![inline](images/dmg.png) = :heart_eyes:
+
+##(LFS = Large File Storage)
+
+^ Enabling it in a GitLab project is as simple as clicking a checkbox and making sure you have sufficient space on your server. You can limit how much space each project has for LFS storage.
+
+^ Git LFS can handle pretty big files. The biggest I've had cause to use was a 7.7GB El Capitan AutoDMG image, which was no trouble at all.
+
+---
+# Git LFS Example
+## Local Installation
 ```bash
 brew install git-lfs
-cd munki-repo
 git lfs install
-git lfs track "*.dmg"
+```
 
-git add pkgs/GoogleChrome.dmg
-git commit -m "Added Chrome"
+^ Installing git lfs is easy. It's available on brew and MacPorts, or you can download the binary from GitHub.
+
+^ Git LFS install adds lfs support to your global git config.
+
+---
+# Git LFS Example
+## Repo Setup
+```bash
+cd munki-repo
+git lfs track "*.pkg"
+git add .gitattributes
+git commit -m "Added LFS tracking for PKGs"
+```
+
+^ Now that LFS is installed, you can just go to a repo and tell it which files to track. The pattern is added to .gitattributes, and once you commit that change you're in business.
+
+---
+# Git LFS Example
+## There's no step 3!
+```bash
+git add pkgs/SweetApp.pkg
+git commit -m "Added SweetApp"
 git push origin master
 ```
 
-^ A quick example. Install git-lfs, open an existing git repo, use `git lfs install` to initialize lfs in that repo, then specify the file types you would like to track. From here on, you can use standard git commands to stage files, commit your changes, then push them to a remote server, just like you would with a standard git repo.
+^ Now you can interact with package files like you would any other file in git. Obviously you don't get granular diffs, but you now have a record and a copy of which pkg file you were working with at any given point in time.
 
----
-![80% left](https://gitlab.com/gitlab-com/gitlab-artwork/raw/master/logo/logo-extra-whitespace.png)
-
-#[fit]GitLab
-- Open Source
-- Self-hosted or gitlab.com
-- Freemium: Free and paid editions
-
-
-^ In our case, that remote server is GitLab. GitLab is an open source competitor to GitHub. It's very easy to set up, just a package install on most Linux distros. The free edition is good enough for most environments, including ours, the paid version adds some nice bonus features and support. GitLab has lots of cool features, like the already-mentioned Git LFS support, as well as an issue tracker, wiki hosting, a container registry, and more, but I'm gong to focus on my favorite feature...
+^ From here it's as easy as using standard git push and pull commands to move packages to and from your git host.
 
 ---
 # [fit] GitLab CI
 
+^ Now the real fun starts.
+
 ---
 # What is CI?
-
 ## Continuous Integration
-- Push code :arrow_right: Build and Test :arrow_right: :no_entry: :white_check_mark:
 
-## Continuous Deployment
-- Push code :arrow_right: Build, Test, Deploy :arrow_right: :no_entry: :white_check_mark:
+1. Push code to GitLab ⌨️ ⬆️
+2. Do something with that code ⚙️  🛠
+3. Report results 🚫 ✅
 
-^ CI stands for Continuous Integration. In the software development world, this usually means your code is automatically tested and built every time you push it to the server, to reduce the likelihood of bugs cropping up. It has a sister concept, Continuous Deployment, which takes it one step further, using the same tools to then automatically put your code into production.
+<!-- ## Continuous Deployment
+- Push code to GitLab :arrow_right: Build, Test :arrow_right: Deploy :arrow_right: :no_entry: :white_check_mark: -->
+
+^ CI stands for Continuous Integration. If you've ever used Jenkins, you might have encountered CI. In the software development world, CI means every time you push updated code to your project, it's automatically built or tested, to reduce the likelihood of bugs cropping up. If you know the old carpentry saying "measure twice, cut once", imagine if you could automatically check your measurement each time you move the saw.
 
 ---
 # CI Runners
 
-![inline 10%](https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/OS_X_El_Capitan_logo.svg/2000px-OS_X_El_Capitan_logo.svg.png)![inline 10%](https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Windows_logo_-_2012.svg/2000px-Windows_logo_-_2012.svg.png)
-![inline 75%](https://upload.wikimedia.org/wikipedia/commons/a/af/Tux.png)![inline fit](http://static.techfieldday.com/wp-content/uploads/2016/06/docker-logo-300.png)
+![inline](https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Tux_Mono.svg/848px-Tux_Mono.svg.png)![inline 4.5%](images/macos.png)
+![inline](images/Windows.png)
 
-^ CI copies your code to a runner client, which can run on Linux, Mac, or Windows; virtual or physical. There it executes one or more jobs. Jobs can be run in sequence or parallel, and can be anything you can script. GitLab CI even supports Docker, so you even create temporary containers that execute the job, return the result, and are discarded.
+^ GitLab has a client they call the GitLab CI runner. You can run it on each of the major OSes.
+
+^ Once you have the runner installed, it will wait for GitLab to assign it jobs. Jobs can be run in sequence or parallel, and can be anything you can script.
+
+^ Runners can be shared by many GitLab projects, or you can create runners reserved for specific projects, if a specific environment is needed.
+
+^ Sponsor shout out, Robert and Gregory from MacStadium, GL blog post
 
 ---
-# .gitlab-ci.yml
+# CI Runners
 
+![inline](images/docker.png)
+
+^ GitLab CI even supports Docker, so you even create temporary containers that execute the job, return the result, and are discarded. You can pull containers from the Docker Hub or another registry, and GitLab has a built-in registry too.
+
+---
+# CI Autoscaling Mode
+
+^ The GitLab runner also has an "autoscale" mode, which uses the Docker Machine tool to create temporary VMs in a cloud provider like AWS or Digital Ocean. The VMs execute their assigned jobs, return the results, and are terminated and deleted.
+
+---
+# CI Configuration
+## .gitlab-ci.yml
 ```yaml
 validate:
   stage: test
-  script: check_for_typos.sh
+  script: lint_roller.sh
 
 roll_out:
   stage: deploy
-  when: manual
   only: master
   script:
-    - ./reticulate_splines.py
+    - ./sound_klaxons_and_flash_lights.py
     - rsync build/* user@remote_server:/deploy/path/
 ```
 
-^ My favorite part about GitLab CI is that the file that defines your CI jobs is included in your git repo, and so is tracked along with the rest of your files. You just add a file named `.gitlab-ci.yml` to your repo, and GitLab will try to start building your project. You can call out scripts, run inline commands, specify stage order, set variables, limit which runners should run the job, and lots more. So, lets take a look at a CI yml file.
+^ My favorite part about GitLab CI is that you define your CI jobs as code, so changes to your build process are tracked in git too.
+
+^ Here's an example of a CI config file. You just add one of these to your repo, and GitLab will try to start executing CI for your project on an available runner. You can call scripts and commands, specify stage order, set variables, pass files between stages, and lots more.
 
 ---
 # .gitlab-ci.yml, annotated
-
 ```yaml
 validate: # first job name
   stage: test # All 'test' stage jobs run before 'deploy' stage
-  script: check_for_typos.sh # Run this script
+  script: lint_roller.sh # Run this script
 
-roll_out: # second job name
+deploy: # second job name
   stage: deploy # Start only when all 'test' stage jobs complete
-  when: manual # Require user interaction to start
   only: master # Only run on Master branch
   script:
-    - ./reticulate_splines.py # Call script in repo
+    - ./sound_klaxons_and_flash_lights.py # Call script in repo
     - rsync build/* user@remote_server:/deploy/path/ # inline command
 ```
 
-^ In this example, I have two jobs, validate and roll-out. Validate is in the test stage, so it goes first, and it just runs the "check for typos" script. It will run any time someone pushes to GitLab.
-Roll-out is marked as a deploy stage, so it starts when all test jobs complete. I've set `when` to manual, so roll-out won't start until I click go on the GitLab project page. I also specify to only run this job when there are updates to the master branch, because I don't want to push development branches to production. Finally, it runs a script, and an inline command. If everything suceeds, GitLab CI reports success.
+^ In this example, I have two jobs, validate and roll-out. Validate is in the test stage, so it goes first, and it just runs the "check for typos" script. It will run any time someone pushes a commit to the parent GitLab project.
+
+^ The second job, Roll-out, is marked as a deploy stage, so it only starts when all test jobs complete successfully. I specify to only run this job when there are updates to the master branch, because I don't want to push development branches to production. Finally, it runs a script, and an inline command.
+
+^ If both jobs succeed, GitLab CI reports success.
 
 ---
-# Result
-![inline fit](https://dl.dropboxusercontent.com/s/h83v91vms6qp0d1/2016-08-18%20at%201.13%20PM.png)
+# [fit] So what about Macs?
 
-^ As you can see in this screenshot, the build passed. The test step completed successfully, and the deploy step wasn't run because this wasn't the master branch. For illustration purposes I enabled the manual option for Deploy, which can be started in the menu to the right of the build.
-
----
-# [fit] GitLab at Synapse
+^ And here's the payoff. I would like to credit Tim Sutton for planting most of these ideas in my head with his Jenkins talk at last year's MacDevOps.
 
 ---
-# GitLab at Synapse
-## Client Work
-- Easy (and free) to include clients :free:
-- Issue tracker for feedback and milestone planning :bar_chart:
-- Build and test environments are documented :no_good: :snowflake:
-- Runner + physical computer = hardware testing! :computer::calling:
+![inline](images/munki.png)
 
-^ We started using GitLab at Synapse 3 years ago for our engineers to host their project repos. It's easy to add accounts for our clients to access the code we write for them, and to get visibility into project progress through the issue tracker and milestone planning. Doing testing using Gitlab CI means  build and test environments are better documented, resulting in fewer "snowflakes". Installing the runner client on physical computers also allows us to do automated hardware testing on connected devices.
+^ I'll start with everybody's favorite.
 
 ---
-# GitLab at Synapse
-## IT
-- Munki ![inline](http://munki.phys.ethz.ch/img/munki_logo.png)
-  - Automatic upload to S3 host
-- Imagr :computer:
-  - Automatic `rsync`ing to site imaging servers
-- Ansible :satellite:
-  - Configuration Management for Linux servers
+# Munki in Git
 
-^ In the IT department we try to store as much of our scripts and configurations in GitLab as we can. This includes Munki and Imagr, which using CI and LFS are automatically deployed whenever a commit to the master branch is made. We use Ansible for configuration management of our Linux servers, changes pushed to master are automatically deployed after review.
+- History
+- Collaboration
+- Experimentation
 
----
-# Infrastructure
-![inline 80%](GitLab-S3-Munki.png)
+![right 110%](images/munki.png)
+
+^ If you use Munki, you're likely already familiar with the advantages of keeping your Munki repository in version control.
+
+<!-- ^ If you're not already familiar with how Munki works, at its heart it's a set of plists, pkgs, and dmgs distributed that the Mac client app requests via http. Very simple technically, but there's a little learning curve to using it. -->
 
 ---
+# The Old Way (No LFS, No CI)
+![inline 110%](images/OldMunki.png)
+
+^ Before I started using GitLab CI and Git LFS, my Munki workflow was an unwieldy amalgam of git, ssh, and rsync. It was a pain in the butt to get more than one person involved, you had to pull from git and rsync the packages from the Munki server and hope it was all in sync and hope nobody else would clobber your changes.
+
+---
+# The New Way
+![inline 95%](images/NewMunki.png)
+
+^ Deploying via GitLab is as simple as can be. I make my changes to my local repo, push it to GitLab, which then processes the changes and syncs them to the Munki servers, and clients start updating. Easy.
+
+---
+![inline](images/imagr.png)
+
+^ From an infrastructure point of view, Imagr is very similar to Munki. I moved our Imagr repo into an LFS enabled git repo, and configured the CI to trigger a sync on each of our site image servers when we push to the master, just like I did with Munki, and that was it.
+
+---
+![inline](images/profile.png)
+
+^ Since the GitLab CI runner supports Mac OS, I set up a runner with an Apple developer certificate that signs all our configuration profiles. I also added a step to lint the plists and validate the contents of some fields, like PayloadOrganization. One time I slipped up and deployed a profile from "Your Org Here" to the whole company.
+
+^ Next I want to figure out how to make the profiles get added to my Munki repo after being signed.
+
+---
+# 🚗 ![20% inline](images/package.png)
+
+---
+# ? 🚗 ![20% inline](images/package.png) ?
+
+---
+![fit](images/autopkg.png)
+
+^ AutoPkg is another good use case for CI. I haven't implemented this in GitLab CI myself yet, but Rick Heil has. You put all your overrides in a repo together, and use a nifty script from Facebook CPE to commit updated applications to your Munki repo.
+
+<!-- ---
 # [fit]Demo
 
 ^ Open .gitlab-ci.yml and s3-deploy.sh. Walk through the yml, the deploy script, and show how variables are set in the GitLab project outside of version control that can be passed into CI
@@ -188,15 +350,35 @@ hit "pipelines" section
 Open the log for the CI build
 
 ^ Once complete, check for updates in the Managed Software Center in client VM.
-GREAT SUCCESS
+GREAT SUCCESS -->
 
 ---
-# Q & A
+# [fit] So
+
+^ So why do all this?
+
+---
+# [fit] Automatic
+
+^ Using GitLab and CI makes it much easier to do better IT.
+
+^ Automation is good, but the more you can control the execution environment, the more reliable it is. With GitLab CI, it's really easy. You set up your runner environment, and then just send your tasks to it.
+
+---
+# [fit] Accountable
+
+^ You get to see exactly what changed, who changed it, and when. You get your git history, as well as the execution transcripts of every job sent to CI.
+
+---
+# [fit] Collaborative
+
+^ "Hey, are you on the server?" Nobody likes that question. By routing our workflows through GitLab, anybody can jump in the process. If our work conflicts, we find out before it gets into production.
+
 
 ---
 
 # More Information
-- This presentation: github.com/macjustice/gitlab-presentation
+- This presentation: gitlab.com/macjustice/gitlab-presentation
 - [GitLab](www.gitlab.com)
 - [GitLab CI](https://about.gitlab.com/gitlab-ci/)
 - [Git LFS](https://git-lfs.github.com/)
@@ -208,5 +390,7 @@ GREAT SUCCESS
 # Thanks!
 ### Twitter: @macjustice
 ### MacAdmins Slack: macjustice
-### GitHub: macjustice
 ### Wherever: macjustice
+
+---
+# Q & A
