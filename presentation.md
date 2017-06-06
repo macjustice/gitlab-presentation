@@ -12,24 +12,28 @@ theme: Next, 9
 ## Sr. Support Specialist
 ## Synapse Product Development
 
-^ My name is Mac Justice, I'm the Senior Support Specialist at Synapse Product Development. I've likely heard every joke you can make about my name -- please don't treat this statement as a challenge.
+^ My name is Mac Justice, I'm the Senior Support Specialist at Synapse Product Development.
+
+^ I think I've heard every joke there is about my name, but feel free to try.
 
 ---
 ![fit](images/synapse_bar.png)
 
-^ Synapse is a engineering consulting company specializing in hardware development. We specialize in mechanical, electrical, and firmware engineering. Clients come to us with products they would like to bring to market, and we help turn ideas into a manufacturable product.
+^ Synapse is a engineering consulting company specializing in hardware development. We specialize in mechanical, electrical, and firmware engineering. Clients come to us with products they would like to create, and we help turn ideas into a manufacturable product.
+
+^ Most of our client work is under NDA, but I can say a few folks here work for companies that are our customers.
 
 ---
 ![inline 100%](images/git.png)
 
-^ Since we do a lot of work with embedded Linux, many of our enineers were already familiar with git, so Synapse migrated to git from SVN in 2010.
+^ The firmware developers I work with need a version control system, and since many work with embedded Linux they're very comfortable with git.
 
-^ While the decentralized nature of git is one of the benefits, there's a lot of reasons to want a central repo host.
+^ So, they looked into setting up a central git repo host.
 
 ---
 ![100% inline](images/gitolite.jpg)
 
-^ The first thing we used was Gitolite, which gets the job done but with very few frills.
+^ First, Synapse used Gitolite, a free open source tool which gets the job done but with very few frills.
 
 ^ It has no GUI, so user interaction is strictly via ssh. It's pretty much just a git host with access control features.
 
@@ -43,13 +47,15 @@ theme: Next, 9
 
 ^ We wanted a nice web GUI, so our engineers and clients can share input and collaborate easily. It also helps us manage permissions and the like on the administrative side.
 
+^ ctd next slide
+
 ---
 # Git Host Wish List
 - Web GUI
 - Issue tracking
 - Inexpensive
 
-^ Some projects used JIRA for bug tracking, but it was expensive and cumbersome to manage for a small company with many short-term projects. An integrated issue tracker would be helpful.
+^ Some projects used JIRA for bug tracking, but it was expensive and cumbersome to manage for a small company with many short-term projects. An integrated issue tracker would be a plus.
 
 ^ Additionally, we wanted a tool that wouldn't cost us an arm and a leg. Again, Synapse is not a very big company, and software development is only part of our service offering.
 
@@ -57,7 +63,11 @@ theme: Next, 9
 
 ![fit](images/gitlab.png)
 
-^ After considering some alternatives, such as GitHub Enterprise and Atlassian's BitBucket/JIRA/Bamboo stack, we settled on GitLab, largely because it was free and the employee doing the selection was a Ruby guy, and GL is built on Rails. Not the most rigorous of selection criteria, but the product has grown into a complete package in the 5 years we've been using it.
+^ After considering some alternatives, such as GitHub Enterprise and Atlassian's BitBucket/JIRA/Bamboo stack, we settled on GitLab, largely because it was free and easy to set up.
+
+^ The employee doing the selection was also a Ruby guy, and GL is built on Rails.
+
+^ Not the most rigorous of selection criteria, but the product has grown a lot in the 5 years we've been using it, and it's been a big win for us.
 
 ---
 # [fit] GitLab Administration
@@ -93,9 +103,9 @@ Enterprise Premium | $200/user/year | 4 Hour | High Availability, other advanced
 ---
 # GitLab Administration
 ## Authentication & Authorization
-- Built-in Authorization
-- LDAP: Active Directory, Open Directory
-- OmniAuth: Google, Facebook, Twitter, etc.
+- Built-in
+- LDAP
+- OAuth & SAML
 
 ^ There are a ton of methods to enable you and your users to log in to your GitLab. You can mix and match. At Synapse, we use G Suite SAML for employee login, cross-referenced with LDAP for group permissions. Synapse customers use Google Oauth via the OmniAuth feature.
 
@@ -103,16 +113,17 @@ Enterprise Premium | $200/user/year | 4 Hour | High Availability, other advanced
 # GitLab Administration
 ## Integrations
 
-![inline](images/slack.png)![inline](images/hipchat.png)![inline 175%](images/teams.png)![inline 75%](images/webhook_logo.png)
+![inline](images/slack.png)![inline](images/hipchat.png)![inline 200%](images/teams.png)
+![inline 75%](images/webhook_logo.png)
 
-^ GitLab is extremely integration friendly. It has prebuilt notification services for the major team chat services, including Slack slash commands. It has a great RESTful API, as well as customizable webhooks to interact with other services.
+^ GitLab is extremely integration friendly. It has prebuilt notification services for the major team chat services, including Slack slash commands. It has a handy RESTful API, as well as customizable webhooks to interact with other services.
 
 ---
 ![34%](images/ok.png)
 
 <!-- ![](https://media.giphy.com/media/26DOs997h6fgsCthu/giphy.gif?response_id=5925261e8c00051b4993c8e9) -->
 
-^ By this time you might be thinking, OK, I've server applications get installed and have users and all that. What's cool about GitLab?
+^ By this time you might be thinking, OK, I've seen server applications get installed and have users and all that. What's cool about GitLab?
 
 ---
 # [fit] Git LFS
@@ -201,18 +212,20 @@ git push origin master
 ![inline](https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Tux_Mono.svg/848px-Tux_Mono.svg.png)![inline 4.5%](images/macos.png)
 ![inline](images/Windows.png)
 
-^ GitLab has a client they call the GitLab CI runner.
+^ GitLab has a client they call the GitLab CI runner. You can run it on each of the major OSes.
 
-^ Once you have the runner installed, it will wait patiently for GitLab to assign it jobs. Jobs can be run in sequence or parallel, and can be anything you can script.
+^ Once you have the runner installed, it will wait for GitLab to assign it jobs. Jobs can be run in sequence or parallel, and can be anything you can script.
 
 ^ Runners can be shared by many GitLab projects, or you can create runners reserved for specific projects, if a specific environment is needed.
+
+^ Sponsor shout out, Robert and Gregory from MacStadium, GL blog post
 
 ---
 # CI Runners
 
 ![inline](images/docker.png)
 
-^ GitLab CI even supports Docker, so you even create temporary containers that execute the job, return the result, and are discarded, giving you a clean and predictable execution environment every time.
+^ GitLab CI even supports Docker, so you even create temporary containers that execute the job, return the result, and are discarded. You can pull containers from the Docker Hub or another registry, and GitLab has a built-in registry too.
 
 ---
 # CI Autoscaling Mode
@@ -308,13 +321,15 @@ deploy: # second job name
 ^ Next I want to figure out how to make the profiles get added to my Munki repo after being signed.
 
 ---
-# [fit] 🚗 ![15% inline](images/package.png)
+# 🚗 ![20% inline](images/package.png)
+
+---
+# ? 🚗 ![20% inline](images/package.png) ?
+
+---
+![fit](images/autopkg.png)
 
 ^ AutoPkg is another good use case for CI. I haven't implemented this in GitLab CI myself yet, but Rick Heil has. You put all your overrides in a repo together, and use a nifty script from Facebook CPE to commit updated applications to your Munki repo.
-
-<!-- ---
-# Infrastructure
-![inline 80%](GitLab-S3-Munki.png) -->
 
 <!-- ---
 # [fit]Demo
@@ -336,6 +351,29 @@ Open the log for the CI build
 
 ^ Once complete, check for updates in the Managed Software Center in client VM.
 GREAT SUCCESS -->
+
+---
+# [fit] So
+
+^ So why do all this?
+
+---
+# [fit] Automatic
+
+^ Using GitLab and CI makes it much easier to do better IT.
+
+^ Automation is good, but the more you can control the execution environment, the more reliable it is. With GitLab CI, it's really easy. You set up your runner environment, and then just send your tasks to it.
+
+---
+# [fit] Accountable
+
+^ You get to see exactly what changed, who changed it, and when. You get your git history, as well as the execution transcripts of every job sent to CI.
+
+---
+# [fit] Collaborative
+
+^ "Hey, are you on the server?" Nobody likes that question. By routing our workflows through GitLab, anybody can jump in the process. If our work conflicts, we find out before it gets into production.
+
 
 ---
 
